@@ -1,5 +1,9 @@
 ---
 title: This is a note
+type: note
+secret: true
+topics:
+  - test
 ---
 
 It can be anything. I would like it to be a test note.

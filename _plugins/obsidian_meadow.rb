@@ -76,6 +76,9 @@ module Jekyll
 
       embed_appender = Jekyll::ObsidianMeadow::EmbedAppender.new(site)
       embed_appender.append_embeds
+
+      callout_formatter = Jekyll::ObsidianMeadow::CalloutFormatter.new(site)
+      callout_formatter.format_callouts
     end
 
     # Jekyll::Hooks.register :pages, :post_convert do |doc|
@@ -113,4 +116,3 @@ module Jekyll
     end
   end
 end
-

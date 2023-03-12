@@ -1,5 +1,8 @@
 ---
 title: CSS Grid Masonry style
+draft: true
+type: guide
+secret: true
 ---
 
 css spec proposal that can be enabled as a flag in firefox.

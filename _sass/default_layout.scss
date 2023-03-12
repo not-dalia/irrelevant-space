@@ -7,5 +7,22 @@
     max-width: $main-col-width;
     width: 100%;
     margin-bottom: 20px;
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 400;
+      margin-bottom: 0;
+    }
+
+    .description {
+      display: none;
+    }
+  }
+
+  .topic-title {
+    text-transform: capitalize;
+    font-weight: 400 !important;
+    color: $irrelevant-text-gray;
+    margin-bottom: 10px;
   }
 }

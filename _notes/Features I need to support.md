@@ -1,6 +1,10 @@
 ---
 title: Features I need to support
 image: /assets/hypocycle.svg
+draft: true
+topics:
+  - test
+type: endeavor
 ---
 
 A lot of what's mentioned in the [docs](https://help.obsidian.md/How+to/Format+your+notes)

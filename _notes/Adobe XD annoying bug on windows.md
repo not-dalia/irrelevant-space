@@ -1,6 +1,10 @@
 ---
 title: Adobe XD annoying bug on windows
 date: 2023-02-26 02:54:08 +0000
+draft: true
+topics:
+  - bug
+  - tech
 ---
 
 

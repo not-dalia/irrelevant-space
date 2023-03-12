@@ -32,8 +32,8 @@ module Jekyll
           result.gsub!(OBSIDIAN_CALLOUT_START, '')
           result.gsub!(BLOCKQUOTE_START, '')
 
-          el = new_block_el(:blockquote, nil, {'class' => "obsidian-callout #{callout_class}", 'data-type' => "#{callout_type}", "data-title" => "#{callout_text}"}, location: start_line_number)
-          # title_el = new_block_el(:p, 3, {'class' => "obsidian-callout-title" } , location: start_line_number)
+          el = new_block_el(:blockquote, nil, {'class' => "meadow-callout #{callout_class}", 'data-type' => "#{callout_type}", "data-title" => "#{callout_text}"}, location: start_line_number)
+          # title_el = new_block_el(:p, 3, {'class' => "meadow-callout-title" } , location: start_line_number)
           # title_el.children << new_block_el(:text, callout_text, nil, location: start_line_number)
           # el.children << title_el
           @tree.children << el

@@ -1,6 +1,12 @@
 ---
 title: Debugging Jekyll plugins in VSCode
 draft: true
+type: guide
+topics:
+  - Jekyll
+  - Ruby
+  - VSCode
+  - Debugging
 ---
 
 

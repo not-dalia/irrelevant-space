@@ -1,5 +1,8 @@
 ---
 title: Todo
+type: node
+draft: true
+topics: ['Jekyll']
 ---
 
 - ~~Fix broken links (markdown link at the moment)~~

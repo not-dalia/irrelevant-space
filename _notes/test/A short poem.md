@@ -1,5 +1,7 @@
 ---
 title: A short poem
+topics:
+  - test
 ---
 
 > The art of losing isn't hard to master

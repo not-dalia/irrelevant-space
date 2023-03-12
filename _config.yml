@@ -58,6 +58,11 @@ defaults:
       path: _notes/assets
     values:
       permalink: /assets/:name
+  - scope:
+      type: topics  # select all category pages
+    values:
+      layout: topics_page
+      permalink: topics/:topic/
 
 obsidian_meadow:
   enabled: true

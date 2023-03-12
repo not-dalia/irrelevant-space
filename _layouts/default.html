@@ -24,10 +24,9 @@
           <div class="nav-row">
             <div class="nav-row-title">Topics</div>
             <div class="nav-row-links">
-              <a href="/topics/art">Art</a>
-              <a href="/topics/books">Books</a>
-              <a href="/topics/food">Food</a>
-              <a href="/topics/tech">Tech</a>
+              {% for topic in site.topics %}
+                <a href="{{topic.url}}">{{topic.topic}}</a>
+              {% endfor %}
             </div>
           </div>
           <div class="nav-row">

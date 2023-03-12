@@ -1,5 +1,7 @@
 ---
 title: Header tests
+topics:
+  - test
 ---
 
 ## this is a section

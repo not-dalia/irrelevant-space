@@ -1,5 +1,7 @@
 ---
 title: internal links
+topics:
+  - test
 ---
 
 # Internal Links are Weird

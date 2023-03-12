@@ -1,6 +1,13 @@
 ---
 title: Color Transparency Converter
 image: /assets/opacitron.svg
+type: endeavor
+draft: true
+topics:
+  - Tech
+  - Color Theory
+  - JavaScript
+  - Web Tool
 ---
 ![[opacitron.svg|200]]
 

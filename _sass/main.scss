@@ -112,7 +112,7 @@ header {
     .nav-row {
       display: flex;
       flex-direction: row;
-      align-items: center;
+      align-items: flex-start;
       margin-bottom: 0.6rem;
 
       .nav-row-title {
@@ -128,6 +128,8 @@ header {
         flex-direction: row;
         align-items: center;
         flex-wrap: wrap;
+        line-height: 1.5rem;
+        text-transform: capitalize;
 
         a {
           margin-right: 0.6rem;

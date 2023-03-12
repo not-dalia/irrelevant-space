@@ -17,6 +17,16 @@ html_id: note
     </div>
     <div class="side-col">
       <div class="backlink-wrapper">
+        <h2>Tags</h2>
+        <div class="topics">
+          {% for topic in page.topics %}
+            <a href="/topic/{{ topic | slugify }}">{{ topic }}</a>
+            {% unless forloop.last %}<span class="separator">●</span>{% endunless %}
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="backlink-wrapper">
         <h2>Note Mentions</h2>
         <ul id="backlinks">
           <p>Fetching mentions...</p>
@@ -178,14 +188,8 @@ html_id: note
           preview = `<h2>${title}</h2><div>${content}</div>`;
         }
 
-
-
         linkPreviewContent.innerHTML = preview;
 
-        let callouts = linkPreviewContent.querySelectorAll('.obsidian-callout');
-        callouts.forEach(callout => {
-          fixCallout(callout);
-        });
         lucide.createIcons();
         linkPreview.classList.add('visible');
         linkPreview.setAttribute('aria-hidden', 'false');
@@ -203,53 +207,15 @@ html_id: note
 <script src="https://unpkg.com/lucide@latest"></script>
 
 <script>
-  let callouts = document.querySelectorAll('.obsidian-callout');
-  callouts.forEach(callout => {
-    fixCallout(callout);
-  });
+
   lucide.createIcons();
 
-  function fixCallout(callout) {
-    if (callout.classList.contains('formatted-callout')) return;
-    let innerCallouts = callout.querySelectorAll('.obsidian-callout');
-    innerCallouts.forEach(innerCallout => {
-      fixCallout(innerCallout);
-    });
-    let calloutType = callout.getAttribute('data-type');
-    let calloutTitle = callout.getAttribute('data-title')?.trim();
-    let calloutContent = callout.innerHTML.trim();
-    let calloutProperties = getCalloutProperties(calloutType);
-    let calloutColor = calloutProperties.color;
-    let calloutIcon = calloutProperties.icon;
-    let calloutName = calloutProperties.name;
-    let calloutTitleElement = `<div class="obsidian-callout-title"><i class="callout-icon" icon-name="${calloutIcon}"></i>${calloutTitle}</div>`;
-    if (callout.classList.contains('callout-foldable')) {
-      let calloutId = `callout-${Math.random().toString(36).substr(2, 9)}`;
-      callout.setAttribute('id', calloutId);
-      let expanded = callout.classList.contains('folded') ? 'false' : 'true';
-      calloutTitleElement = `
-        <button class="obsidian-callout-title" role="button" aria-expanded="false" aria-label="Toggle callout" tabindex="0" onclick="toggleCallout(this)" aria-controls="${calloutId}" aria-expanded="${expanded}">
-          <i class="callout-icon" icon-name="${calloutIcon}"></i>
-          <span class="callout-title-text">${calloutTitle}</span>
-          <i class="callout-icon callout-icon-toggle" icon-name="chevron-down"></i>
-        </button>
-      `;
-    }
-    callout.classList.add('formatted-callout');
-    callout.classList.add(`obsidian-callout-${calloutName}`);
-    let calloutHtml = `
-        ${calloutTitleElement}
-        <div class="callout-content">${calloutContent}</div>
-    `;
-    callout.innerHTML = calloutHtml;
-  }
-
-  function toggleCallout(element) {
+  function toggleMeadowCallout(element) {
     let calloutId = element.getAttribute('aria-controls');
     let callout = document.getElementById(calloutId);
-    let calloutTitle = callout.querySelector('.obsidian-callout-title');
-    let calloutContent = callout.querySelector('.callout-content');
-    let calloutIcon = callout.querySelector('.callout-icon-toggle');
+    let calloutTitle = callout.querySelector('.meadow-callout-title');
+    let calloutContent = callout.querySelector('.meadow-callout-content');
+    let calloutIcon = callout.querySelector('.meadow-callout-icon-toggle');
     let isExpanded = !callout.classList.contains('folded');
     calloutTitle.setAttribute('aria-expanded', !isExpanded);
     calloutContent.setAttribute('aria-hidden', isExpanded);
@@ -257,76 +223,6 @@ html_id: note
       callout.classList.add('folded');
     } else {
       callout.classList.remove('folded');
-    }
-  }
-
-  function getCalloutProperties(type) {
-    switch (type) {
-      case 'abstract': case 'summary': case 'tldr':
-        return {
-          name: 'abstract',
-          icon: 'clipboard-list',
-        };
-      case 'info':
-        return {
-          name: 'info',
-          icon: 'info',
-        };
-      case 'todo':
-        return {
-          name: 'todo',
-          icon: 'check-circle-2',
-        };
-      case 'tip': case 'hint': case 'important':
-        return {
-          name: 'tip',
-          icon: 'flame',
-        };
-      case 'warning': case 'caution': case 'attention':
-        return {
-          name: 'warning',
-          icon: 'alert-triangle',
-        };
-      case 'failure': case 'fail': case 'missing':
-        return {
-          name: 'failure',
-          icon: 'x',
-        };
-      case 'success': case 'check': case 'done':
-        return {
-          name: 'success',
-          icon: 'check',
-        };
-      case 'question': case 'faq': case 'help':
-        return {
-          name: 'question',
-          icon: 'help-circle',
-        };
-      case 'danger': case 'error':
-        return {
-          name: 'danger',
-          icon: 'zap',
-        };
-      case 'bug':
-        return {
-          name: 'bug',
-          icon: 'bug',
-        };
-      case 'example':
-        return {
-          name: 'example',
-          icon: 'list',
-        };
-      case 'quote':
-        return {
-          name: 'quote',
-          icon: 'quote',
-        };
-      default:
-        return {
-          name: 'note',
-          icon: 'pencil',
-        };
     }
   }
 </script>

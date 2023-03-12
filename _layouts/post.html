@@ -1,0 +1,20 @@
+---
+layout: default
+---
+{{ content }}
+
+<div id="backlinks">
+
+</div>
+<script>
+  let pageUrl = '{{ page.url }}';
+  fetch('/scripts/backlinks.json')
+    .then(response => response.json())
+    .then(data => {
+      let backlinks = data[pageUrl];
+      if (backlinks) {
+        let backlinksDiv = document.getElementById('backlinks');
+        backlinksDiv.innerHTML = backlinks.map(link => `<a href="${link.url}">${link.title}</a>`).join(', ');
+      }
+    });
+</script>

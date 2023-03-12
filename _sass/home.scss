@@ -1,0 +1,148 @@
+@charset "utf-8";
+
+#home {
+  .main-container {
+    color: $main-text-color;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 10px 0;
+    width: 100%;
+    gap: 50px;
+  }
+
+  .main-col {
+    max-width: $main-col-width;
+    width: 100%;
+    flex: 1;
+  }
+
+  .side-col {
+    max-width: $side-col-width;
+    width: 100%;
+  }
+
+  header {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin-bottom: 20px;
+    max-width: initial !important;
+
+    #eleWKGgZuVL1 {
+      height: 220px;
+    }
+
+    .mobile-logo {
+      display: none;
+    }
+
+    .side-col {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .main-col {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+  }
+
+  #newest {
+    width: 100%;
+    .newest-row {
+      margin-bottom: 8px;
+      line-height: 1.5rem;
+      width: 100%;
+    }
+  }
+
+  #about {
+    line-height: 1.5rem;
+  }
+
+  h2 {
+    color: $irrelevant-text-gray;
+    font-weight: 400 !important;
+    font-family: 'Delius', sans-serif;
+    position: relative;
+    margin: 0;
+    margin-bottom: 0.6rem;
+    font-size: 1.8rem;
+
+    a {
+      text-decoration: none;
+      color: $irrelevant-text-gray;
+
+      &:hover {
+        color: $irrelevant-color-dark;
+
+        .more-arrow {
+          transform: translate(0.6rem, 0);
+          fill: $irrelevant-color-dark;
+        }
+      }
+    }
+
+    span {
+      z-index: 2;
+      position: relative;
+    }
+
+    .more-arrow {
+      margin-left: 0.4rem;
+      height: 1.4rem;
+      width: 1.4rem;
+      margin-bottom: -0.1rem;
+      transition: all 0.2s ease-in-out;
+      fill: $main-text-color;
+    }
+  }
+
+
+  // when the screen is smaller than 1000px
+  @media only screen and (max-width: 1000px) {
+    header {
+      .side-col {
+        display: none;
+      }
+    }
+
+    .main-col {
+      flex-direction: row !important;
+      flex-wrap: wrap;
+      max-width: initial !important;
+      .header-inner {
+        width: 100%;
+      }
+    }
+
+    .main-container {
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .side-col {
+      max-width: 100%;
+      width: 100%;
+    }
+
+    .mobile-logo {
+      display: none;
+      // display: block !important;
+      // width: fit-content;
+
+      #eleWKGgZuVL1 {
+        width: 80px !important;
+      }
+    }
+
+    #endeavors {
+      justify-content: center !important;
+    }
+  }
+}

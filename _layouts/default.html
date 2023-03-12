@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/assets/favicon.svg" type="image/x-icon">
+  <link rel="stylesheet" href="/styles/styles.css">
+  <link rel="stylesheet" href="/styles/tango.css">
+  <title>Irrelevant Space
+    {% if page.title %}
+      - {{ page.title }}
+    {% endif %}
+  </title>
+</head>
+<body id="{% if layout.html_id %}{{ layout.html_id }}{% else %}default{% endif %}">
+  <header>
+    <div class="main-col">
+      <h1><a href="/"><span>Irrelevant</span> <span>Space</span></a></h1>
+      <div class="header-inner">
+        <div class="description">A place for unfinished projects and random musings on art, technology and other things.
+        </div>
+        <div class="nav">
+          <div class="nav-row">
+            <div class="nav-row-title">Topics</div>
+            <div class="nav-row-links">
+              <a href="/topics/art">Art</a>
+              <a href="/topics/books">Books</a>
+              <a href="/topics/food">Food</a>
+              <a href="/topics/tech">Tech</a>
+            </div>
+          </div>
+          <div class="nav-row">
+            <div class="nav-row-title">Formats</div>
+            <div class="nav-row-links">
+              <a href="/formats/endeavors">Endeavors</a>
+              <!-- <a href="/formats/essays">Essays</a> -->
+              <a href="/formats/notes">Notes</a>
+              <a href="/formats/sketches">Sketches</a>
+              <a href="/formats/recipes">Recipes</a>
+              <a href="/formats/thoughts">Thoughts</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+  {{ content }}
+  </main>
+</body>
+</html>

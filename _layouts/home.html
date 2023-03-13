@@ -1,119 +1,89 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="/assets/favicon.svg" type="image/x-icon">
-  <link rel="stylesheet" href="/styles/styles.css">
-  <link rel="stylesheet" href="/styles/tango.css">
-  <title>Irrelevant Space</title>
-</head>
-
-<body id="home">
-  <header>
-    <!-- <img src="/assets/logo.svg" alt="Girl sitting on a planet" class="logo" /> -->
-    <div class="side-col">
-      {% include logo.svg %}
+---
+layout: default
+---
+<div id="about" class="col-wrapper">
+  <div class="side-col">
+    {% include logo.svg %}
+  </div>
+  <div class="main-col">
+    <div class="about-me">
+      Hello<span class="period">.</span> I am a software engineer and a crafts enthusiast<span class="period">.</span>
     </div>
-
-    <div class="main-col">
-      <h1><a href="/"><span>Irrelevant</span> <span>Space</span></a></h1>
-      <div class="header-inner">
-        <div class="description">A place for unfinished projects and random musings on art, technology and other things.
-        </div>
-        <div class="nav">
-          <div class="nav-row">
-            <div class="nav-row-title">Topics</div>
-            <div class="nav-row-links">
-              {% for topic in  site.topics limit:8 %}
-                <a href="{{topic.url}}">{{topic.topic}}</a>
-              {% endfor %}
-              {% if site.topics.size > 8 %}
-                <a href="/topics">More</a>
-              {% endif %}
-            </div>
-          </div>
-          <div class="nav-row">
-            <div class="nav-row-title">Formats</div>
-            <div class="nav-row-links">
-              <a href="/formats/endeavors">Endeavors</a>
-              <!-- <a href="/formats/essays">Essays</a> -->
-              <a href="/formats/notes">Notes</a>
-              <a href="/formats/sketches">Sketches</a>
-              <a href="/formats/recipes">Recipes</a>
-              <a href="/formats/thoughts">Thoughts</a>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="about-site">
+      This is a place for my <a href="/endeavors/">unfinished projects</a> and <a href="/notes/">random musings</a> on
+      technology, art, books and other things.
     </div>
-  </header>
+  </div>
+</div>
 
-  <main class="main-container">
-    <div class="side-col">
-      <div class="section">
-        <h2><a href="/posts"><span>All Posts</span><span>{% include more-arrow.html %}</span></a></h2>
-        <div id="newest">
-          {% assign sortedNotes = site.notes | sort: 'created_at' | reverse %}
-          {% for note in sortedNotes limit:5 %}
-            <div class="newest-row">
-              <span class="note-type">{% if note.type and note.type != nil %}{{note.type}}{% else %}Note{% endif %}</span>
-              <span class="note-title">
-                <a href="{{note.url}}">{{ note.title }}</a>
-              </span>
-            </div>
-          {% endfor %}
-        </div>
-      </div>
-    </div>
+<div class="content-wrapper">
+  <div class="col-wrapper">
     <div class="main-col">
       <div class="section">
-        <h2><span>Endeavors</span></h2>
+        <h2 class="section-title"><a
+            href="/endeavors/"><span>Endeavors</span><span>{% include more-arrow.html %}</span></a></h2>
+        <div class="section-description">
+          Project writeups and notes on specific topics, featuring insights and discoveries from personal explorations.
+        </div>
         <div id="endeavors">
           <a href="#" class="endeavor">
             <div class="card hoverable">
               <img src="/assets/hypocycle.svg" alt="" />
+              <div class="card-title">Adventures in Visualizing Mathematical Concepts</div>
               <div class="info">
-                <div class="state">Ongoing</div>
+                <div class="note-type">Ongoing</div>
                 <div class="age">5 months ago</div>
               </div>
-              <div class="card-title">Adventures in Visualizing Mathematical Concepts</div>
             </div>
           </a>
-
           <a href="#" class="endeavor">
             <div class="card hoverable">
               <img src="/assets/hypocycle.svg" alt="" />
+              <div class="card-title">Adventures in Visualizing Mathematical Concepts</div>
               <div class="info">
-                <div class="state">Ongoing</div>
+                <div class="note-type">Ongoing</div>
                 <div class="age">5 months ago</div>
               </div>
-              <div class="card-title">Adventures in Visualizing Mathematical Concepts</div>
             </div>
           </a>
-
           <a href="#" class="endeavor">
             <div class="card hoverable">
               <img src="/assets/hypocycle.svg" alt="" />
+              <div class="card-title">Adventures in Visualizing Mathematical Concepts</div>
               <div class="info">
-                <div class="state">Ongoing</div>
+                <div class="note-type">Ongoing</div>
                 <div class="age">5 months ago</div>
               </div>
-              <div class="card-title">Adventures in Visualizing Mathematical Concepts</div>
             </div>
           </a>
-        </div>
-      </div>
-      <div class="section">
-        <h2><span>About Me</span></h2>
-        <div id="about">
-          I'm a software developer and an arts and crafts enthusiast. While I'm no artist, I've always been interested in the intersection of art and technology. I build tiny web tools that are meant to help me explore ideas and concepts.
         </div>
       </div>
     </div>
-  </main>
+    <div class="side-col">
+      <div class="section">
+        <h2 class="section-title"><a href="/notes/"><span>Notes</span><span>{% include more-arrow.html %}</span></a>
+        </h2>
+        <div class="section-description">
+          From musings to guides, a collection of ideas and insights.
+        </div>
+        <div id="notes">
+          {% assign sortedNotes = site.notes | sort: 'created_at' | reverse %}
+          {% for note in sortedNotes limit:5 %}
+          <a href="{{note.url}}" class="notes-row">
+            <div class="card hoverable">
+              <span
+                class="note-type">{% if note.type and note.type != nil %}{{note.type}}{% else %}Note{% endif %}</span>
+              <span class="note-title">
+                {{note.title}}
+              </span>
+            </div>
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/macy@2"></script>
 <script>
@@ -122,8 +92,8 @@
     trueOrder: false,
     waitForImages: false,
     useContainerForBreakpoints: true,
-    margin: 10,
-    columns: 3,
+    margin: 14,
+    columns: 2,
     breakAt: {
       750: 2,
       500: 1,
@@ -137,7 +107,3 @@
     // macy.recalculate(true);
   }, true);
 </script>
-
-</body>
-
-</html>

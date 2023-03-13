@@ -7,6 +7,7 @@ topics:
   - Ruby
   - VSCode
   - Debugging
+subtitle: "Struggles and solutions in setting up a ruby development environment."
 ---
 
 

@@ -2,51 +2,57 @@
 layout: default
 html_id: note
 ---
-<div class="note-wrapper">
-  <h1><span>{{ page.title }}</span></h1>
-  <div class="info">
-    <div class="note-type">{% if page.type and page.type != nil %}{{page.type}}{% else %}Note{% endif %}</div>
-    <div class="separator">●</div>
-    <div class="age">Created {{ page.created_at | timeago }}</div>
-    <div class="separator">●</div>
-    <div class="age">Last updated {{ page.last_modified_at | timeago }}</div>
+<div class="col-wrapper" id="note-header">
+  <div class="main-col">
+    <div class="info">
+      <div class="note-type">{% if page.type and page.type != nil %}{{page.type}}{% else %}Note{% endif %}</div>
+      <div class="separator">●</div>
+      <div class="age">Created {{ page.created_at | timeago }}</div>
+      <div class="separator">●</div>
+      <div class="age">Last updated {{ page.last_modified_at | timeago }}</div>
+    </div>
+    <h1><span>{{ page.title }}</span></h1>
+    {% if page.subtitle %}<div class="note-subtitle">{{page.subtitle}}</div>{% endif %}
   </div>
-  <div class="note-content">
+</div>
+
+<div class="content-wrapper" id="note-content">
+  <div class="col-wrapper">
     <div class="main-col">
       {{ content }}
     </div>
     <div class="side-col">
-      <div class="backlink-wrapper">
-        <h2>Tags</h2>
+      <div class="note-side-wrapper card">
+        <h2>Topics</h2>
         <div class="topics">
           {% for topic in page.topics %}
-            <a href="/topic/{{ topic | slugify }}">{{ topic }}</a>
-            {% unless forloop.last %}<span class="separator">●</span>{% endunless %}
+          <a href="/topics/{{ topic | slugify }}">{{ topic }}</a>
           {% endfor %}
         </div>
       </div>
 
-      <div class="backlink-wrapper">
-        <h2>Note Mentions</h2>
+      <div class="note-side-wrapper card">
+        <h2>Mentions</h2>
         <ul id="backlinks">
           <p>Fetching mentions...</p>
         </ul>
       </div>
     </div>
   </div>
-  <div id="link-preview" role="tooltip">
-    <div id="link-preview-content">
-      <p>Consectetur ea exercitation id pariatur eiusmod pariatur non eiusmod id velit irure pariatur proident. Elit
-        ullamco ut dolore id sint occaecat veniam adipisicing Lorem consequat enim consequat. Deserunt velit velit
-        aliqua culpa incididunt magna aliquip exercitation sunt Lorem. Enim dolore cupidatat velit magna eu consequat
-        velit culpa enim eiusmod. Culpa in proident proident do excepteur nulla quis mollit officia ex qui sint commodo
-        magna. Non nostrud fugiat reprehenderit eu minim. Officia labore eiusmod anim tempor ad elit.</p>
+</div>
 
-      <p>Ad officia magna adipisicing commodo nulla in labore magna adipisicing. Pariatur esse laboris eiusmod officia
-        quis proident sunt exercitation irure officia ex eu. Minim esse esse ad exercitation magna velit minim enim
-        voluptate reprehenderit ad. Nostrud cillum dolor reprehenderit aute Lorem ipsum ullamco qui incididunt nostrud
-        dolore.</p>
-    </div>
+<div id="link-preview" role="tooltip">
+  <div id="link-preview-content">
+    <p>Consectetur ea exercitation id pariatur eiusmod pariatur non eiusmod id velit irure pariatur proident. Elit
+      ullamco ut dolore id sint occaecat veniam adipisicing Lorem consequat enim consequat. Deserunt velit velit
+      aliqua culpa incididunt magna aliquip exercitation sunt Lorem. Enim dolore cupidatat velit magna eu consequat
+      velit culpa enim eiusmod. Culpa in proident proident do excepteur nulla quis mollit officia ex qui sint commodo
+      magna. Non nostrud fugiat reprehenderit eu minim. Officia labore eiusmod anim tempor ad elit.</p>
+
+    <p>Ad officia magna adipisicing commodo nulla in labore magna adipisicing. Pariatur esse laboris eiusmod officia
+      quis proident sunt exercitation irure officia ex eu. Minim esse esse ad exercitation magna velit minim enim
+      voluptate reprehenderit ad. Nostrud cillum dolor reprehenderit aute Lorem ipsum ullamco qui incididunt nostrud
+      dolore.</p>
   </div>
 </div>
 
@@ -161,7 +167,7 @@ html_id: note
       .then(data => {
         let parser = new DOMParser();
         let doc = parser.parseFromString(data, 'text/html');
-        let title = doc.querySelector('.note-wrapper h1').innerText;
+        let title = doc.querySelector('#note-header h1').innerText;
         let content = '';
         let preview = '';
 
@@ -180,11 +186,11 @@ html_id: note
             content = elements.map(el => el.outerHTML).join('');
             preview = `<div>${content}</div>`;
           } else {
-            content = doc.querySelector('.note-wrapper .note-content .main-col').innerHTML;
+            content = doc.querySelector('#note-content .main-col').innerHTML;
             preview = `<h2>${title}</h2><div>${content}</div>`;
           }
         } else {
-          content = doc.querySelector('.note-wrapper .note-content .main-col').innerHTML;
+          content = doc.querySelector('#note-content .main-col').innerHTML;
           preview = `<h2>${title}</h2><div>${content}</div>`;
         }
 
@@ -207,7 +213,6 @@ html_id: note
 <script src="https://unpkg.com/lucide@latest"></script>
 
 <script>
-
   lucide.createIcons();
 
   function toggleMeadowCallout(element) {

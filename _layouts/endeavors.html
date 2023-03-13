@@ -4,9 +4,9 @@ layout: default
 
 <div class="col-wrapper" id="note-header">
   <div class="main-col">
-    <h2>Notes</h2>
+    <h2>Endeavors</h2>
     <div class="note-subtitle">
-      From musings to guides, a collection of ideas and insights.
+      Project writeups and notes on specific topics, featuring insights and discoveries from personal explorations.
     </div>
   </div>
 </div>
@@ -22,7 +22,7 @@ layout: default
           {% if note.type and note.type != nil %}{{note.type | downcase}}{% else %}note{% endif %}
           {% endcapture %}
           {% assign note_type = note_type | strip %}
-          {% unless note_type == 'endeavor' %}
+          {% if note_type == 'endeavor' %}
           <a href="{{note.url}}" class="endeavor type-{{note_type}}">
             <div class="card hoverable">
               {% if note.image %}
@@ -36,7 +36,7 @@ layout: default
               </div>
             </div>
           </a>
-          {% endunless %}
+          {% endif %}
           {% endfor %}
         </div>
       </div>

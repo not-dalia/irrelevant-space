@@ -60,7 +60,7 @@ module Jekyll
     end
 
     Jekyll::Hooks.register :documents, :post_init do |doc|
-      doc.data['last_modified_at'] = File.mtime(doc.path) if doc.data['last_modified_at'].nil?
+      doc.data['last_updated_at'] = File.mtime(doc.path) if doc.data['last_updated_at'].nil?
       doc.data['created_at'] = File.ctime(doc.path) if doc.data['created_at'].nil?
     end
 

@@ -73,6 +73,7 @@ layout: default
             <div class="card hoverable">
               <span
                 class="note-type">{% if note.type and note.type != nil %}{{note.type}}{% else %}Note{% endif %}</span>
+              {% if note.draft %}<span class="note-type draft">Draft</span>{% endif %}
               <span class="note-title">
                 {{note.title}}
               </span>

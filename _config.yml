@@ -84,8 +84,8 @@ jekyll_timeago:
   fallbacks: true
 
 exclude:
-  # - scripts/backlinks.json
-  # - scripts/broken_links.json
+  - scripts/backlinks.json
+  - scripts/broken_links.json
   - _notes/.obsidian
   - _notes/_private
   - _notes/.obsidian

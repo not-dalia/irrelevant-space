@@ -1,31 +1,47 @@
 ---
 layout: default
 ---
-<script src="https://cdn.jsdelivr.net/npm/macy@2"></script>
-
-<div class="section">
-  <div class="section-header">
-    <h2 class="topic-title">{{ page.topic }}</span></h2>
-  </div>
-  <div id="endeavors">
-    {% assign sortedNotes = page.linked_docs | sort: 'created_at' | reverse %}
-    {% for note in sortedNotes %}
-    <a href="{{note.url}}" class="endeavor">
-      <div class="card hoverable">
-        {% if note.image %}
-        <img src="{{note.image}}" alt="" />
-        {% endif %}
-        <div class="info">
-          <div class="note-type">{% if note.type and note.type != nil %}{{note.type}}{% else %}Note{% endif %}</div>
-          <div class="age">{{ note.created_at | timeago }}</div>
-        </div>
-        <div class="card-title">{{ note.title }}</div>
-      </div>
-    </a>
-    {% endfor %}
+<div class="col-wrapper" id="note-header">
+  <div class="main-col">
+    <h2>{{ page.topic }}</h2>
+    <div class="note-subtitle">
+      Notes and endeavours related to "{{ page.topic }}".
+    </div>
   </div>
 </div>
 
+<div class="content-wrapper" id="note-content">
+  <div class="col-wrapper">
+    <div class="main-col">
+      <div class="section">
+        <div id="endeavors">
+          {% assign sortedNotes = page.linked_docs | sort: 'created_at' | reverse %}
+          {% for note in sortedNotes %}
+          {% capture note_type %}
+          {% if note.type and note.type != nil %}{{note.type | downcase}}{% else %}note{% endif %}
+          {% endcapture %}
+          {% assign note_type = note_type | strip %}
+          <a href="{{note.url}}" class="endeavor type-{{note_type}}">
+            <div class="card hoverable">
+              {% if note.image %}
+              <img src="{{note.image}}" alt="" />
+              {% endif %}
+              <div class="card-title">{{ note.title }}</div>
+              <div class="info">
+                <div class="note-type">{{note_type}}</div>
+                {% if note.draft %}<div class="note-type draft">Draft</div>{% endif %}
+                <div class="age">{{ note.created_at | timeago }}</div>
+              </div>
+            </div>
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/macy@2"></script>
 <script>
   var macy = Macy({
     container: '#endeavors',

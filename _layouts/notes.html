@@ -8,6 +8,38 @@ layout: default
     <div class="note-subtitle">
       From musings to guides, a collection of ideas and insights.
     </div>
+    <div class="topic-list">
+      <span class="topic-list-title">Topics</span>
+      {% for topic in site.topics %}
+      {% if forloop.index <= 6 %}
+      <button onclick="toggleTopic(this)" data-topic="{{topic.topic | downcase}}" class="topic"
+        aria-pressed="false">{{topic.topic}}</button>
+      {% else %}
+      <button onclick="toggleTopic(this)" data-topic="{{topic.topic | downcase}}" class="topic topic-show-more hidden"
+        aria-pressed="false">{{topic.topic}}</button>
+      {% endif %}
+      {% endfor %}
+      <button onclick="showAllTopics(this)" class="topic topic-show-more-button" aria-pressed="false">Show all
+        topics</button>
+    </div>
+    <div class="topic-list">
+      <span class="topic-list-title">Types</span>
+      {% capture types %}
+      {% for note in site.notes %}
+      {% assign note_type = note.type | downcase %}
+      {% if note_type == nil %}
+      note
+      {% elsif note_type != 'endeavor' %}
+      {{note_type}}
+      {% endif %}
+      {% endfor %}
+      {% endcapture %}
+      {% assign types = types | split: ' ' | uniq | sort %}
+      {% for type in types %}
+      <button onclick="toggleType(this)" data-type="{{type | downcase}}" class="topic"
+        aria-pressed="false">{{type}}</button>
+      {% endfor %}
+    </div>
   </div>
 </div>
 
@@ -23,7 +55,9 @@ layout: default
           {% endcapture %}
           {% assign note_type = note_type | strip %}
           {% unless note_type == 'endeavor' %}
-          <a href="{{note.url}}" class="endeavor type-{{note_type}}">
+          <a href="{{note.url}}" class="endeavor type-{{note_type}}"
+            data-topics="{% for topic in note.topics %}{{topic | downcase}}{% unless forloop.last %},{% endunless %}{% endfor %}"
+            data-type="{{note_type}}">
             <div class="card hoverable">
               {% if note.image %}
               <img src="{{note.image}}" alt="" />
@@ -65,4 +99,91 @@ layout: default
     }, 200);
     // macy.recalculate(true);
   }, true);
+
+  var selectedTopics = [];
+  var selectedTypes = [];
+
+  function toggleTopic(element) {
+    var topic = element.getAttribute('data-topic');
+    if (element.getAttribute('aria-pressed') == 'false') {
+      element.setAttribute('aria-pressed', 'true');
+      element.classList.add('selected');
+      selectedTopics.push(topic);
+    } else {
+      element.setAttribute('aria-pressed', 'false');
+      element.classList.remove('selected');
+      selectedTopics = selectedTopics.filter(function (item) {
+        return item !== topic;
+      });
+    }
+    filterNotes();
+  }
+
+  function filterNotes() {
+    var notes = document.querySelectorAll('#endeavors a.endeavor');
+    if (selectedTopics.length > 0) {
+      notes.forEach(function (note) {
+        var topics = note.getAttribute('data-topics').split(',');
+        var show = false;
+        topics.forEach(function (topic) {
+          if (selectedTopics.includes(topic)) {
+            show = true;
+          }
+        });
+        if (show) {
+          note.classList.remove('hidden');
+        } else {
+          note.classList.add('hidden');
+        }
+      });
+    } else {
+      notes.forEach(function (note) {
+        note.classList.remove('hidden');
+      });
+    }
+    macy.recalculate(true);
+  }
+
+  function toggleType(element) {
+    var type = element.getAttribute('data-type');
+    if (element.getAttribute('aria-pressed') == 'false') {
+      element.setAttribute('aria-pressed', 'true');
+      element.classList.add('selected');
+      selectedTypes.push(type);
+    } else {
+      element.setAttribute('aria-pressed', 'false');
+      element.classList.remove('selected');
+      selectedTypes = selectedTypes.filter(function (item) {
+        return item !== type;
+      });
+    }
+    filterTypes();
+  }
+
+  function filterTypes() {
+    var notes = document.querySelectorAll('#endeavors a.endeavor');
+    if (selectedTypes.length > 0) {
+      notes.forEach(function (note) {
+        var type = note.getAttribute('data-type');
+        if (selectedTypes.includes(type)) {
+          note.classList.remove('hidden');
+        } else {
+          note.classList.add('hidden');
+        }
+      });
+    } else {
+      notes.forEach(function (note) {
+        note.classList.remove('hidden');
+      });
+    }
+    macy.recalculate(true);
+  }
+
+  function showAllTopics() {
+    var topics = document.querySelectorAll('.topic-show-more');
+    topics.forEach(function (topic) {
+      topic.classList.remove('hidden');
+    });
+    document.querySelector('.topic-show-more-button').classList.add('hidden');
+  }
 </script>

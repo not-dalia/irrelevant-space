@@ -12,7 +12,7 @@ $irrelevant-color-semi-dark: #0298D1;
 $irrelevant-color-dark: #34537A;
 $main-col-width: 800px;
 $side-col-width: 370px;
-$main-container-width: 1300px;
+$main-container-width: 1200px;
 $body-padding-y: 1rem;
 $body-padding-x: 1.5rem;
 
@@ -525,6 +525,60 @@ main {
     pointer-events: all;
     visibility: visible;
   }
+}
+
+.topic-list {
+  margin-top: 0.5rem;
+  .topic-list-title {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 500;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    margin-right: 1rem;
+  }
+
+  .topic {
+    display: inline-block;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 3px;
+    background: $irrelevant-color-light;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    display: inline-block;
+    text-align: center;
+    min-width: 70px;
+    line-height: 1.3rem;
+    box-shadow: none;
+    border: none;
+
+    &:hover {
+      background: $irrelevant-color-medium;
+      cursor: pointer;
+    }
+
+    &.selected {
+      // background: #cd4800;
+      background: $irrelevant-color-semi-dark;
+      color: white;
+    }
+
+    &.topic-show-more-button {
+      background: #fff3e0;
+      color: #cd4800;
+      &:hover {
+        background: #ffe0b2;
+        color: #cd4800;
+      }
+    }
+  }
+}
+
+.hidden {
+  display: none !important;
 }
 
 @media only screen and (max-width: 1000px) {

@@ -20,8 +20,8 @@ group :jekyll_plugins do
   gem "jekyll-last-modified-at"
 end
 
-gem 'ruby-debug-ide'
-gem 'debase'
+# gem 'ruby-debug-ide'
+# gem 'debase'
 
 gem 'nokogiri'
 

@@ -33,7 +33,7 @@ pre {
 
 .meadow-callout {
   margin: 0.6px 0;
-  border: 1px solid $irrelevant-color-medium;
+  border: 2px solid white;
   box-shadow: 0px 2px 4px 0px hsla(0, 0%, 0%, .1);
   background: white;
   line-height: 1.5rem;
@@ -124,7 +124,7 @@ pre {
 
 /* Abstract */
 .meadow-callout-abstract {
-  border-color: #e0f2f1;
+  // border-color: #e0f2f1;
   .meadow-callout-title {
     color: #00695c;
     background: #e0f2f1;
@@ -133,7 +133,7 @@ pre {
 
 /* Info */
 .meadow-callout-info {
-  border-color: #d5eaff;
+  // border-color: #d5eaff;
   .meadow-callout-title {
     color: #155cb3;
     background: #d5eaff;
@@ -142,7 +142,7 @@ pre {
 
 /* Todo */
 .meadow-callout-todo {
-  border-color: #d9f2ff;
+  // border-color: #d9f2ff;
   .meadow-callout-title {
     color: #1565c0;
     background: #d9f2ff;
@@ -151,7 +151,7 @@ pre {
 
 /* Tip */
 .meadow-callout-tip {
-  border-color: #ffe7e7;
+  // border-color: #ffe7e7;
   .meadow-callout-title {
     color: #bd0000;
     background: #ffe7e7;
@@ -160,7 +160,7 @@ pre {
 
 /* Warning */
 .meadow-callout-warning {
-  border-color: #fff3e0;
+  // border-color: #fff3e0;
   .meadow-callout-title {
     color: #bf360c;
     background: #fff3e0;
@@ -169,7 +169,7 @@ pre {
 
 /* Failure */
 .meadow-callout-failure {
-  border-color: #ffe7e7;
+  // border-color: #ffe7e7;
   .meadow-callout-title {
     color: #bd0000;
     background: #ffe7e7;
@@ -178,7 +178,7 @@ pre {
 
 /* Success */
 .meadow-callout-success {
-  border-color: #d9ffd9;
+  // border-color: #d9ffd9;
   .meadow-callout-title {
     color: #007200;
     background: #d9ffd9;
@@ -187,7 +187,7 @@ pre {
 
 /* Question */
 .meadow-callout-question {
-  border-color: #ede7f6;
+  // border-color: #ede7f6;
   .meadow-callout-title {
     color: #512da8;
     background: #ede7f6;
@@ -196,7 +196,7 @@ pre {
 
 /* Danger */
 .meadow-callout-danger {
-  border-color: #ffe7e7;
+  // border-color: #ffe7e7;
   .meadow-callout-title {
     color: #bd0000;
     background: #ffe7e7;
@@ -205,7 +205,7 @@ pre {
 
 /* Bug */
 .meadow-callout-bug {
-  border-color: #ffe7e7;
+  // border-color: #ffe7e7;
   .meadow-callout-title {
     color: #bd0000;
     background: #ffe7e7;
@@ -214,7 +214,7 @@ pre {
 
 /* Example */
 .meadow-callout-example {
-  border-color: #ede7f6;
+  // border-color: #ede7f6;
   .meadow-callout-title {
     color: #512da8;
     background: #ede7f6;
@@ -223,7 +223,7 @@ pre {
 
 /* Quote */
 .meadow-callout-quote {
-  border-color: #f7f7f7;
+  // border-color: #f7f7f7;
   .meadow-callout-title {
     color: #333;
     background: #f7f7f7;
@@ -232,7 +232,7 @@ pre {
 
 /* Note */
 .meadow-callout-note {
-  border-color: $irrelevant-color-medium;
+  // border-color: $irrelevant-color-medium;
   .meadow-callout-title {
     color: $irrelevant-color-dark;
     background: $irrelevant-color-medium;

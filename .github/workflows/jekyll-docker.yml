@@ -20,6 +20,8 @@ jobs:
           key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-gems-
+      - name: Set file permissions
+        run: chmod -R +x .
       - name: Build & Deploy to GitHub Pages
         uses: not-dalia/jekyll4-deploy-gh-pages@master
         env:

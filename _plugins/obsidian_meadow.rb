@@ -63,7 +63,7 @@ module Jekyll
 
     Jekyll::Hooks.register :documents, :post_init do |doc|
       doc.data['created_at'] = `git log --pretty=format:%aD -n 1 -- #{doc.path}`.chomp if doc.data['created_at'].nil?
-      doc.data['last_updated_at'] = `git log --pretty=format:%aD -n 1 -- #{doc.path}`.chomp if doc.data['last_updated_at'].nil?
+      doc.data['last_updated_at'] = `git log --pretty=format:%aD -n 1 -- #{doc.path}` if doc.data['last_updated_at'].nil?
       Jekyll.logger.info "git output", "git log --pretty=format:%aD -n 1 -- #{doc.path}"
       Jekyll.logger.info "#{doc.path}", "Last updated at: #{doc.data['last_updated_at'].to_s}"
       doc.data['created_at'] = File.ctime(doc.path) if doc.data['created_at'].nil? || doc.data['created_at'].empty?

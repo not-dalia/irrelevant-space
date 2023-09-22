@@ -23,7 +23,7 @@ html_id: note
       {{ content }}
     </div>
     <div class="side-col">
-      {% if page.topics and page.topics.size > 0 %}
+      {% if page.topics and page.topics.size > 0 and page.secret != true %}
       <div class="note-side-wrapper card">
         <h2>Topics</h2>
         <div class="topics">
@@ -65,7 +65,7 @@ html_id: note
     .then(response => response.json())
     .then(data => {
       let backlinks = data[pageUrl];
-      if (backlinks) {
+      if (backlinks && backlinks.length > 0) {
         let backlinksDiv = document.getElementById('backlinks');
         backlinksDiv.innerHTML = backlinks.filter(link => {
           let currentUrl = new URL(window.location.href);

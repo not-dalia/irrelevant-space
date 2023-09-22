@@ -11,16 +11,15 @@ layout: default
     <div class="topic-list">
       <span class="topic-list-title">Topics</span>
       {% for topic in site.topics %}
-      {% if forloop.index <= 6 %}
-      <button onclick="toggleTopic(this)" data-topic="{{topic.topic | downcase}}" class="topic"
-        aria-pressed="false">{{topic.topic}}</button>
-      {% else %}
-      <button onclick="toggleTopic(this)" data-topic="{{topic.topic | downcase}}" class="topic topic-show-more hidden"
-        aria-pressed="false">{{topic.topic}}</button>
-      {% endif %}
-      {% endfor %}
-      <button onclick="showAllTopics(this)" class="topic topic-show-more-button" aria-pressed="false">Show all
-        topics</button>
+      {% if forloop.index <= 6 %} <button onclick="toggleTopic(this)" data-topic="{{topic.topic | downcase}}"
+        class="topic" aria-pressed="false">{{topic.topic}}</button>
+        {% else %}
+        <button onclick="toggleTopic(this)" data-topic="{{topic.topic | downcase}}" class="topic topic-show-more hidden"
+          aria-pressed="false">{{topic.topic}}</button>
+        {% endif %}
+        {% endfor %}
+        <button onclick="showAllTopics(this)" class="topic topic-show-more-button" aria-pressed="false">Show all
+          topics</button>
     </div>
     <div class="topic-list">
       <span class="topic-list-title">Types</span>
@@ -49,12 +48,14 @@ layout: default
       <div class="section">
         <div id="endeavors">
           {% assign sortedNotes = site.notes | sort: 'created_at' | reverse %}
+          {% assign count = 0 %}
           {% for note in sortedNotes %}
           {% capture note_type %}
           {% if note.type and note.type != nil %}{{note.type | downcase}}{% else %}note{% endif %}
           {% endcapture %}
           {% assign note_type = note_type | strip %}
-          {% unless note_type == 'endeavor' %}
+          {% unless note_type == 'endeavor' or note.secret == true %}
+          {% assign count = count | plus: 1 %}
           <a href="{{note.url}}" class="endeavor type-{{note_type}}"
             data-topics="{% for topic in note.topics %}{{topic | downcase}}{% unless forloop.last %},{% endunless %}{% endfor %}"
             data-type="{{note_type}}">
@@ -72,6 +73,12 @@ layout: default
           </a>
           {% endunless %}
           {% endfor %}
+          {% if count == 0 %}
+          <div class="no-notes">
+            No notes yet
+          </div>
+          {% endif %}
+          <div id="note-count" data-count="{{count}}" class="hidden"></div>
         </div>
       </div>
     </div>
@@ -80,110 +87,122 @@ layout: default
 
 <script src="https://cdn.jsdelivr.net/npm/macy@2"></script>
 <script>
-  var macy = Macy({
-    container: '#endeavors',
-    trueOrder: false,
-    waitForImages: false,
-    margin: 20,
-    columns: 3,
-    useContainerForBreakpoints: true,
-    breakAt: {
-      750: 2,
-      500: 1,
+  let count = document.getElementById('note-count').getAttribute('data-count');
+  let topicListElements = document.querySelectorAll('.topic-list');
+  if (count == 0) {
+    topicListElements.forEach(function (topicListElement) {
+      topicListElement.classList.add('hidden');
+    });
+  } else {
+    topicListElements.forEach(function (topicListElement) {
+      topicListElement.classList.remove('hidden');
+    });
+
+    var macy = Macy({
+      container: '#endeavors',
+      trueOrder: false,
+      waitForImages: false,
+      margin: 20,
+      columns: 3,
+      useContainerForBreakpoints: true,
+      breakAt: {
+        750: 2,
+        500: 1,
+      }
+    });
+
+    macy.runOnImageLoad(function () {
+      setTimeout(function () {
+        macy.recalculate(true);
+      }, 200);
+      // macy.recalculate(true);
+    }, true);
+
+    var selectedTopics = [];
+    var selectedTypes = [];
+
+    function toggleTopic (element) {
+      var topic = element.getAttribute('data-topic');
+      if (element.getAttribute('aria-pressed') == 'false') {
+        element.setAttribute('aria-pressed', 'true');
+        element.classList.add('selected');
+        selectedTopics.push(topic);
+      } else {
+        element.setAttribute('aria-pressed', 'false');
+        element.classList.remove('selected');
+        selectedTopics = selectedTopics.filter(function (item) {
+          return item !== topic;
+        });
+      }
+      filterNotes();
     }
-  });
 
-  macy.runOnImageLoad(function () {
-    setTimeout(function () {
-      macy.recalculate(true);
-    }, 200);
-    // macy.recalculate(true);
-  }, true);
-
-  var selectedTopics = [];
-  var selectedTypes = [];
-
-  function toggleTopic(element) {
-    var topic = element.getAttribute('data-topic');
-    if (element.getAttribute('aria-pressed') == 'false') {
-      element.setAttribute('aria-pressed', 'true');
-      element.classList.add('selected');
-      selectedTopics.push(topic);
-    } else {
-      element.setAttribute('aria-pressed', 'false');
-      element.classList.remove('selected');
-      selectedTopics = selectedTopics.filter(function (item) {
-        return item !== topic;
-      });
-    }
-    filterNotes();
-  }
-
-  function filterNotes() {
-    var notes = document.querySelectorAll('#endeavors a.endeavor');
-    if (selectedTopics.length > 0) {
-      notes.forEach(function (note) {
-        var topics = note.getAttribute('data-topics').split(',');
-        var show = false;
-        topics.forEach(function (topic) {
-          if (selectedTopics.includes(topic)) {
-            show = true;
+    function filterNotes () {
+      var notes = document.querySelectorAll('#endeavors a.endeavor');
+      if (selectedTopics.length > 0) {
+        notes.forEach(function (note) {
+          var topics = note.getAttribute('data-topics').split(',');
+          var show = false;
+          topics.forEach(function (topic) {
+            if (selectedTopics.includes(topic)) {
+              show = true;
+            }
+          });
+          if (show) {
+            note.classList.remove('hidden');
+          } else {
+            note.classList.add('hidden');
           }
         });
-        if (show) {
+      } else {
+        notes.forEach(function (note) {
           note.classList.remove('hidden');
-        } else {
-          note.classList.add('hidden');
-        }
-      });
-    } else {
-      notes.forEach(function (note) {
-        note.classList.remove('hidden');
-      });
+        });
+      }
+      macy.recalculate(true);
     }
-    macy.recalculate(true);
-  }
 
-  function toggleType(element) {
-    var type = element.getAttribute('data-type');
-    if (element.getAttribute('aria-pressed') == 'false') {
-      element.setAttribute('aria-pressed', 'true');
-      element.classList.add('selected');
-      selectedTypes.push(type);
-    } else {
-      element.setAttribute('aria-pressed', 'false');
-      element.classList.remove('selected');
-      selectedTypes = selectedTypes.filter(function (item) {
-        return item !== type;
-      });
+    function toggleType (element) {
+      var type = element.getAttribute('data-type');
+      if (element.getAttribute('aria-pressed') == 'false') {
+        element.setAttribute('aria-pressed', 'true');
+        element.classList.add('selected');
+        selectedTypes.push(type);
+      } else {
+        element.setAttribute('aria-pressed', 'false');
+        element.classList.remove('selected');
+        selectedTypes = selectedTypes.filter(function (item) {
+          return item !== type;
+        });
+      }
+      filterTypes();
     }
-    filterTypes();
-  }
 
-  function filterTypes() {
-    var notes = document.querySelectorAll('#endeavors a.endeavor');
-    if (selectedTypes.length > 0) {
-      notes.forEach(function (note) {
-        var type = note.getAttribute('data-type');
-        if (selectedTypes.includes(type)) {
+    function filterTypes () {
+      var notes = document.querySelectorAll('#endeavors a.endeavor');
+      if (selectedTypes.length > 0) {
+        notes.forEach(function (note) {
+          var type = note.getAttribute('data-type');
+          if (selectedTypes.includes(type)) {
+            note.classList.remove('hidden');
+          } else {
+            note.classList.add('hidden');
+          }
+        });
+      } else {
+        notes.forEach(function (note) {
           note.classList.remove('hidden');
-        } else {
-          note.classList.add('hidden');
-        }
-      });
-    } else {
-      notes.forEach(function (note) {
-        note.classList.remove('hidden');
-      });
+        });
+      }
+      macy.recalculate(true);
     }
-    macy.recalculate(true);
-  }
 
-  function showAllTopics() {
-    var topics = document.querySelectorAll('.topic-show-more');
-    topics.forEach(function (topic) {
-      topic.classList.remove('hidden');
-    });
-    document.querySelector('.topic-show-more-button').classList.add('hidden');
+    function showAllTopics () {
+      var topics = document.querySelectorAll('.topic-show-more');
+      topics.forEach(function (topic) {
+        topic.classList.remove('hidden');
+      });
+      document.querySelector('.topic-show-more-button').classList.add('hidden');
+    }
   }
 </script>

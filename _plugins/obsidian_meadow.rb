@@ -46,10 +46,12 @@ module Jekyll
           if link.exists? && link.resolved_url.match?(/^#/) == false
             ObsidianMeadow.backlinks[link.resolved_url] = [] if ObsidianMeadow.backlinks[link.resolved_url].nil?
             unless ObsidianMeadow.backlinks[link.resolved_url].any? { |obj| obj['url'] == doc.url }
-              ObsidianMeadow.backlinks[link.resolved_url] << {
-                'url' => doc.url,
-                'title' => doc.data['title']
-              }
+              unless doc.data['secret'] == true
+                ObsidianMeadow.backlinks[link.resolved_url] << {
+                  'url' => doc.url,
+                  'title' => doc.data['title']
+                }
+              end
             end
           else
             ObsidianMeadow.broken_links[link.url] = [] if ObsidianMeadow.broken_links[link.url].nil?
@@ -60,20 +62,32 @@ module Jekyll
     end
 
     Jekyll::Hooks.register :documents, :post_init do |doc|
-      doc.data['last_updated_at'] = File.mtime(doc.path) if doc.data['last_updated_at'].nil?
-      doc.data['created_at'] = File.ctime(doc.path) if doc.data['created_at'].nil?
+      doc.data['created_at'] = `git log --pretty=format:%aD -n 1 -- #{doc.path}`.chomp if doc.data['created_at'].nil?
+      doc.data['last_updated_at'] = `git log --pretty=format:%aD -n 1 -- #{doc.path}`.chomp if doc.data['last_updated_at'].nil?
+      Jekyll.logger.info "git output", "git log --pretty=format:%aD -n 1 -- #{doc.path}"
+      doc.data['created_at'] = File.ctime(doc.path) if doc.data['created_at'].nil? || doc.data['created_at'].empty?
+      doc.data['last_updated_at'] = File.mtime(doc.path) if doc.data['last_updated_at'].nil? || doc.data['last_updated_at'].empty?
+      Jekyll.logger.info "#{doc.path}", "Last updated at: #{doc.data['last_updated_at'].to_s}"
     end
 
     Jekyll::Hooks.register :site, :post_render do |site|
       # overwrite backlinks and broken links as json dump files in _includes
-      File.open('scripts/backlinks.json', 'w') do |file|
+
+      destination = site.dest
+      scripts_path = File.join(destination, 'scripts')
+      FileUtils.mkdir_p(scripts_path) unless File.directory?(scripts_path)
+
+      backlinks_path = File.join(destination, 'scripts/backlinks.json')
+      File.open(backlinks_path, 'w') do |file|
         file.write(ObsidianMeadow.backlinks.to_json)
       end
 
-      File.open('scripts/broken_links.json', 'w') do |file|
+      broken_links_path = File.join(destination, 'scripts/broken_links.json')
+      File.open(broken_links_path, 'w') do |file|
         file.write(ObsidianMeadow.broken_links.to_json)
       end
 
+      Jekyll.logger.info "Obsidian Meadow:", "Backlinks and broken links written to #{backlinks_path} and #{broken_links_path}"
       embed_appender = Jekyll::ObsidianMeadow::EmbedAppender.new(site)
       embed_appender.append_embeds
 

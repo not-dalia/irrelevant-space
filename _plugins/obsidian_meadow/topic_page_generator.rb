@@ -7,6 +7,9 @@ module Jekyll
         @topics = {}
         topic_arr = []
         site.documents.each do |doc|
+          if doc.data['secret'] == true
+            next
+          end
           doc.data['topics']&.each do |topic|
             slugified_topic = Jekyll::Utils.slugify(topic)
             @topics[slugified_topic] ||= {

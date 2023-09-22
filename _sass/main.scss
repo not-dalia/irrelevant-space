@@ -305,6 +305,19 @@ main {
   }
 }
 
+.no-notes {
+  font-family: 'Raleway', sans-serif;
+  font-size: 1rem;
+  line-height: 1.6rem;
+  margin: 0;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+  color: #90a4ae;
+  width: 100%;
+}
+
 #notes {
   .notes-row {
     margin-bottom: 0.6rem;

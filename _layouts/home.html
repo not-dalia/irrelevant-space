@@ -26,36 +26,40 @@ layout: default
           Project writeups and notes on specific topics, featuring insights and discoveries from personal explorations.
         </div>
         <div id="endeavors">
-          <a href="#" class="endeavor">
+          {% assign sortedNotes = site.notes | sort: 'created_at' | reverse %}
+          {% assign count = 0 %}
+          {% for note in sortedNotes %}
+          {% capture note_type %}
+          {% if note.type and note.type != nil %}{{note.type | downcase}}{% else %}note{% endif %}
+          {% endcapture %}
+          {% assign note_type = note_type | strip %}
+          {% if note_type == 'endeavor' and note.secret != true %}
+          {% assign count = count | plus: 1 %}
+          <a href="{{note.url}}" class="endeavor type-{{note_type}}"
+            data-topics="{% for topic in note.topics %}{{topic | downcase}}{% unless forloop.last %},{% endunless %}{% endfor %}"
+            data-type="{{note_type}}">
             <div class="card hoverable">
-              <img src="/assets/hypocycle.svg" alt="" />
-              <div class="card-title">Adventures in Visualizing Mathematical Concepts</div>
+              {% if note.image %}
+              <img src="{{note.image}}" alt="" />
+              {% endif %}
+              <div class="card-title">{{ note.title }}</div>
               <div class="info">
-                <div class="note-type">Ongoing</div>
-                <div class="age">5 months ago</div>
+                <div class="note-type">{{note_type}}</div>
+                {% if note.draft %}<div class="note-type draft">Draft</div>{% endif %}
+                <div class="age">{{ note.created_at | timeago }}</div>
               </div>
             </div>
           </a>
-          <a href="#" class="endeavor">
-            <div class="card hoverable">
-              <img src="/assets/hypocycle.svg" alt="" />
-              <div class="card-title">Adventures in Visualizing Mathematical Concepts</div>
-              <div class="info">
-                <div class="note-type">Ongoing</div>
-                <div class="age">5 months ago</div>
-              </div>
-            </div>
-          </a>
-          <a href="#" class="endeavor">
-            <div class="card hoverable">
-              <img src="/assets/hypocycle.svg" alt="" />
-              <div class="card-title">Adventures in Visualizing Mathematical Concepts</div>
-              <div class="info">
-                <div class="note-type">Ongoing</div>
-                <div class="age">5 months ago</div>
-              </div>
-            </div>
-          </a>
+          {% if count == 5 %}
+          {% break %}
+          {% endif %}
+          {% endif %}
+          {% endfor %}
+          {% if count == 0 %}
+          <div class="no-notes">
+            No endeavours yet
+          </div>
+          {% endif %}
         </div>
       </div>
     </div>
@@ -66,9 +70,12 @@ layout: default
         <div class="section-description">
           From musings to guides, a collection of ideas and experiments.
         </div>
-        <div id="notes">
+        <div id="notes" class="notes">
           {% assign sortedNotes = site.notes | sort: 'created_at' | reverse %}
-          {% for note in sortedNotes limit:5 %}
+          {% assign count = 0 %}
+          {% for note in sortedNotes %}
+          {% if note.secret != true and note.type != 'endeavor' %}
+          {% assign count = count | plus: 1 %}
           <a href="{{note.url}}" class="notes-row">
             <div class="card hoverable">
               <span
@@ -79,7 +86,16 @@ layout: default
               </span>
             </div>
           </a>
+          {% if count == 5 %}
+          {% break %}
+          {% endif %}
+          {% endif %}
           {% endfor %}
+          {% if count == 0 %}
+          <div class="no-notes">
+            No notes yet
+          </div>
+          {% endif %}
         </div>
       </div>
     </div>

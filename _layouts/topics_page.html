@@ -21,6 +21,7 @@ layout: default
           {% if note.type and note.type != nil %}{{note.type | downcase}}{% else %}note{% endif %}
           {% endcapture %}
           {% assign note_type = note_type | strip %}
+          {% unless note.secret == true %}
           <a href="{{note.url}}" class="endeavor type-{{note_type}}">
             <div class="card hoverable">
               {% if note.image %}
@@ -34,6 +35,7 @@ layout: default
               </div>
             </div>
           </a>
+          {% endunless %}
           {% endfor %}
         </div>
       </div>

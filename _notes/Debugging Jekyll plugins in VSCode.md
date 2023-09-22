@@ -12,9 +12,9 @@ subtitle: "Struggles and solutions in setting up a ruby development environment.
 
 
 >[!warning] Disclaimer
->I am not a Ruby expert. In fact this would be my first ruby project ever, so take everything with a grain of salt.
+>I am not a Ruby expert. In fact this would be my first ruby project ever, so take everything here with a grain of salt.
 
-When I first started developing my Jekyll plugin for this theme, I struggled with debugging the plugin code. My code was riddled with lines of `Jekyll.logger` and `puts` that I kept moving around to figure out what I was doing wrong, or what I was doing right. Looking for resources on debugging jekyll plugins didn't produce much, and it took a while to reach a configuration that worked, but I got there at this end. I thought I'd share my configuration and some of the problems I ran into, in case it can be useful for anyone else building Jekyll plugins using VSCode.
+When I first started developing my Jekyll plugin for this theme, I struggled with debugging the plugin code. My code was riddled with lines of `Jekyll.logger` and `puts` that I kept moving around to figure out what I was doing wrong, or what I was doing right. Looking for resources on debugging jekyll plugins didn't produce much, and it took a while to reach a configuration that worked, but I got there in the end. I thought I'd share my configuration and some of the problems I ran into, in case it can be useful for anyone else building Jekyll plugins using VSCode.
 
 ## My Jekyll Setup
 At the time of writing this configuration, I was using a machine running Windows so the instructions might differ slightly if you're using something else. The machine was running:

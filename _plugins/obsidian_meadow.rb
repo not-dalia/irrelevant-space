@@ -64,6 +64,7 @@ module Jekyll
     Jekyll::Hooks.register :documents, :post_init do |doc|
       # doc.data['created_at'] = File.ctime(doc.path) if doc.data['created_at'].nil? || doc.data['created_at'].empty?
       # doc.data['last_updated_at'] = File.mtime(doc.path) if doc.data['last_updated_at'].nil? || doc.data['last_updated_at'].empty?
+      git_safe_directory_command = `git config --global --add safe.directory "#{doc.path}"`
       git_command_last_modified = `git log --follow -1 --format=%ad --date=iso-strict -- "#{doc.path}"`
       git_command_created_at = `git log --follow --format=%ad --date=iso-strict -- "#{doc.path}" | tail -1`
       doc.data['created_at'] = DateTime.parse(git_command_created_at.chomp) if doc.data['created_at'].nil? || doc.data['created_at'].empty?

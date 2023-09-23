@@ -30,3 +30,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PRIVATE_TOKEN_GITHUB }}
           GITHUB_REPOSITORY: ${{ secrets.GITHUB_REPOSITORY }}
           GITHUB_ACTOR: ${{ secrets.GITHUB_ACTOR }}
+          GIT_DISCOVERY_ACROSS_FILESYSTEM: "true"

@@ -62,9 +62,15 @@ module Jekyll
     end
 
     Jekyll::Hooks.register :documents, :post_init do |doc|
-      doc.data['created_at'] = File.ctime(doc.path) if doc.data['created_at'].nil? || doc.data['created_at'].empty?
-      doc.data['last_updated_at'] = File.mtime(doc.path) if doc.data['last_updated_at'].nil? || doc.data['last_updated_at'].empty?
+      # doc.data['created_at'] = File.ctime(doc.path) if doc.data['created_at'].nil? || doc.data['created_at'].empty?
+      # doc.data['last_updated_at'] = File.mtime(doc.path) if doc.data['last_updated_at'].nil? || doc.data['last_updated_at'].empty?
+      git_command_last_modified = `git log --follow -1 --format=%ad --date=iso-strict -- "#{doc.path}"`
+      git_command_created_at = `git log --follow --format=%ad --date=iso-strict -- "#{doc.path}" | tail -1`
+      doc.data['created_at'] = DateTime.parse(git_command_created_at.chomp) if doc.data['created_at'].nil? || doc.data['created_at'].empty?
+      doc.data['last_updated_at'] = DateTime.parse(git_command_last_modified.chomp) if doc.data['last_updated_at'].nil? || doc.data['last_updated_at'].empty?
       Jekyll.logger.info "#{doc.path}", "Last updated at: #{doc.data['last_updated_at'].to_s}"
+      Jekyll.logger.info "#{doc.path}", "Created at: #{doc.data['created_at'].to_s}"
+      Jekyll.logger.info "", "------------------------"
     end
 
     Jekyll::Hooks.register :site, :post_render do |site|

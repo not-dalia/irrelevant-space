@@ -61,37 +61,9 @@ module Jekyll
       end
     end
 
-    def self.run_command(command)
-      `#{command}`.strip
-    end
-
-    def self.get_first_commit_date(file)
-      begin
-        first_commit_date = run_command("git log --diff-filter=A --follow --format=%aI #{file}")
-        Jekyll.logger.info "#{file}", "First commit date: #{first_commit_date.to_s.chomp}"
-        parsed_date = Date.parse(first_commit_date.to_s.chomp)
-        return parsed_date
-      rescue
-        return File.ctime(file)
-      end
-    end
-
-    def self.get_last_commit_date(file)
-      begin
-        last_commit_date = run_command("git log -1 --format=%aI #{file}")
-        Jekyll.logger.info "#{file}", "Last commit date: #{last_commit_date.to_s}"
-        parsed_date = Date.parse(last_commit_date.to_s.chomp)
-        return parsed_date
-      rescue
-        return File.mtime(file)
-      end
-    end
-
     Jekyll::Hooks.register :documents, :post_init do |doc|
-      # doc.data['created_at'] = File.ctime(doc.path) if doc.data['created_at'].nil? || doc.data['created_at'].empty?
-      # doc.data['last_updated_at'] = File.mtime(doc.path) if doc.data['last_updated_at'].nil? || doc.data['last_updated_at'].empty?
-      doc.data['created_at'] = ObsidianMeadow.get_first_commit_date(doc.path) if doc.data['created_at'].nil? || doc.data['created_at'].empty?
-      doc.data['last_updated_at'] = ObsidianMeadow.get_last_commit_date(doc.path) if doc.data['last_updated_at'].nil? || doc.data['last_updated_at'].empty?
+      doc.data['created_at'] = File.ctime(doc.path) if doc.data['created_at'].nil? || doc.data['created_at'].empty?
+      doc.data['last_updated_at'] = File.mtime(doc.path) if doc.data['last_updated_at'].nil? || doc.data['last_updated_at'].empty?
       Jekyll.logger.info "#{doc.path}", "Last updated at: #{doc.data['last_updated_at'].to_s}"
     end
 

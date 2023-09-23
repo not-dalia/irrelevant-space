@@ -61,9 +61,25 @@ module Jekyll
       end
     end
 
+    def run_command(command)
+      `#{command}`.strip
+    end
+
+    def get_first_commit_date(file)
+      first_commit_date = run_command("git log --diff-filter=A --follow --format=%aD #{file} | tail -1")
+      return first_commit_date.chomp
+    end
+
+    def get_last_commit_date(file)
+      last_commit_date = run_command("git log -1 --format=%aD #{file}")
+      return last_commit_date.chomp
+    end
+
     Jekyll::Hooks.register :documents, :post_init do |doc|
-      doc.data['created_at'] = File.ctime(doc.path) if doc.data['created_at'].nil? || doc.data['created_at'].empty?
-      doc.data['last_updated_at'] = File.mtime(doc.path) if doc.data['last_updated_at'].nil? || doc.data['last_updated_at'].empty?
+      # doc.data['created_at'] = File.ctime(doc.path) if doc.data['created_at'].nil? || doc.data['created_at'].empty?
+      # doc.data['last_updated_at'] = File.mtime(doc.path) if doc.data['last_updated_at'].nil? || doc.data['last_updated_at'].empty?
+      doc.data['created_at'] = get_first_commit_date(doc.path) if doc.data['created_at'].nil? || doc.data['created_at'].empty?
+      doc.data['last_updated_at'] = get_last_commit_date(doc.path) if doc.data['last_updated_at'].nil? || doc.data['last_updated_at'].empty?
       Jekyll.logger.info "#{doc.path}", "Last updated at: #{doc.data['last_updated_at'].to_s}"
     end
 

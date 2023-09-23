@@ -66,13 +66,25 @@ module Jekyll
     end
 
     def self.get_first_commit_date(file)
-      first_commit_date = run_command("git log --diff-filter=A --follow --format=%aD #{file} | tail -1")
-      return first_commit_date.chomp
+      begin
+        first_commit_date = run_command("git log --diff-filter=A --follow --format=%aI #{file}")
+        Jekyll.logger.info "#{file}", "First commit date: #{first_commit_date.to_s.chomp}"
+        parsed_date = Date.parse(first_commit_date.to_s.chomp)
+        return parsed_date
+      rescue
+        return File.ctime(file)
+      end
     end
 
     def self.get_last_commit_date(file)
-      last_commit_date = run_command("git log -1 --format=%aD #{file}")
-      return last_commit_date.chomp
+      begin
+        last_commit_date = run_command("git log -1 --format=%aI #{file}")
+        Jekyll.logger.info "#{file}", "Last commit date: #{last_commit_date.to_s}"
+        parsed_date = Date.parse(last_commit_date.to_s.chomp)
+        return parsed_date
+      rescue
+        return File.mtime(file)
+      end
     end
 
     Jekyll::Hooks.register :documents, :post_init do |doc|

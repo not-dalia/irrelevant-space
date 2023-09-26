@@ -2,7 +2,7 @@
 title: Testing
 slug: i-do-what-i-want
 permalink: /:slug.html
-type: Endeavor
+type: endeavour
 topics:
   - test
 ---

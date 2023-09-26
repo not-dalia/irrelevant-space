@@ -28,7 +28,7 @@ layout: default
       {% assign note_type = note.type | downcase %}
       {% if note_type == nil %}
       note
-      {% elsif note_type != 'endeavor' %}
+      {% elsif note_type != 'endeavour' %}
       {{note_type}}
       {% endif %}
       {% endfor %}
@@ -46,7 +46,7 @@ layout: default
   <div class="col-wrapper">
     <div class="main-col">
       <div class="section">
-        <div id="endeavors">
+        <div id="endeavours">
           {% assign sortedNotes = site.notes | sort: 'created_at' | reverse %}
           {% assign count = 0 %}
           {% for note in sortedNotes %}
@@ -54,9 +54,9 @@ layout: default
           {% if note.type and note.type != nil %}{{note.type | downcase}}{% else %}note{% endif %}
           {% endcapture %}
           {% assign note_type = note_type | strip %}
-          {% unless note_type == 'endeavor' or note.secret == true %}
+          {% unless note_type == 'endeavour' or note.secret == true %}
           {% assign count = count | plus: 1 %}
-          <a href="{{note.url}}" class="endeavor type-{{note_type}}"
+          <a href="{{note.url}}" class="endeavour type-{{note_type}}"
             data-topics="{% for topic in note.topics %}{{topic | downcase}}{% unless forloop.last %},{% endunless %}{% endfor %}"
             data-type="{{note_type}}">
             <div class="card hoverable">
@@ -99,7 +99,7 @@ layout: default
     });
 
     var macy = Macy({
-      container: '#endeavors',
+      container: '#endeavours',
       trueOrder: false,
       waitForImages: false,
       margin: 20,
@@ -138,7 +138,7 @@ layout: default
     }
 
     function filterNotes () {
-      var notes = document.querySelectorAll('#endeavors a.endeavor');
+      var notes = document.querySelectorAll('#endeavours a.endeavour');
       if (selectedTopics.length > 0) {
         notes.forEach(function (note) {
           var topics = note.getAttribute('data-topics').split(',');
@@ -179,7 +179,7 @@ layout: default
     }
 
     function filterTypes () {
-      var notes = document.querySelectorAll('#endeavors a.endeavor');
+      var notes = document.querySelectorAll('#endeavours a.endeavour');
       if (selectedTypes.length > 0) {
         notes.forEach(function (note) {
           var type = note.getAttribute('data-type');

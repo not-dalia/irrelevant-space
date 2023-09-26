@@ -4,7 +4,7 @@ image: /assets/hypocycle.svg
 draft: true
 topics:
   - test
-type: endeavor
+type: endeavour
 ---
 
 A lot of what's mentioned in the [docs](https://help.obsidian.md/How+to/Format+your+notes)

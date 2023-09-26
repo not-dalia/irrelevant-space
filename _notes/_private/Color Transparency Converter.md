@@ -1,7 +1,7 @@
 ---
 title: Color Transparency Converter
 image: /assets/opacitron.svg
-type: endeavor
+type: endeavour
 draft: true
 topics:
   - Tech

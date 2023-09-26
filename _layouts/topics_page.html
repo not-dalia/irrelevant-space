@@ -14,7 +14,7 @@ layout: default
   <div class="col-wrapper">
     <div class="main-col">
       <div class="section">
-        <div id="endeavors">
+        <div id="endeavours">
           {% assign sortedNotes = page.linked_docs | sort: 'created_at' | reverse %}
           {% for note in sortedNotes %}
           {% capture note_type %}
@@ -22,7 +22,7 @@ layout: default
           {% endcapture %}
           {% assign note_type = note_type | strip %}
           {% unless note.secret == true %}
-          <a href="{{note.url}}" class="endeavor type-{{note_type}}">
+          <a href="{{note.url}}" class="endeavour type-{{note_type}}">
             <div class="card hoverable">
               {% if note.image %}
               <img src="{{note.image}}" alt="" />
@@ -46,7 +46,7 @@ layout: default
 <script src="https://cdn.jsdelivr.net/npm/macy@2"></script>
 <script>
   var macy = Macy({
-    container: '#endeavors',
+    container: '#endeavours',
     trueOrder: false,
     waitForImages: false,
     margin: 20,

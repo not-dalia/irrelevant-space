@@ -247,14 +247,14 @@ main {
   }
 }
 
-#endeavors {
+#endeavours {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   margin-bottom: 2rem;
   margin-top: 0.6rem;
 
-  .endeavor {
+  .endeavour {
     display: flex;
     flex-direction: column;
     align-items: normal;
@@ -609,7 +609,7 @@ main {
     flex: 1;
   }
 
-  #endeavors {
+  #endeavours {
     justify-content: center !important;
   }
 
@@ -666,6 +666,6 @@ main {
 
 body,
 main,
-#endeavors {
+#endeavours {
   width: 100%;
 }

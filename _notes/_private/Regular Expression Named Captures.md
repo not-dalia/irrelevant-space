@@ -7,7 +7,7 @@ type: note
 draft: true
 ---
 
-Why has no one ever told me that's a thing? My partner said it's my fault for not reading the docs, which is technically true, but I would rather blame him for not having ever told me about that.
+I only recently discovered that you can name regular expression captures. I've been using regular expressions for years, and I've never come across named captures. My partner says it's my fault for not reading the docs, which is technically the truth, but I'd rather blame him for not having ever told me about that.
 
 This is how you name regular expression captures:
 [[Attention Needed]]

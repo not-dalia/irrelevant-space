@@ -60,4 +60,4 @@ After creating the worker, the [environment variables can be set from the dashbo
 > Instead of using environment variables, you should be able to use [KV](https://developers.cloudflare.com/kv/) to store the hostname-Umami ID mapping. I haven't tried this yet, but I plan to do so soon.
 
 ## A Word of Caution
-This solution ended up working almost perfectly. However, one project had the script vanish mysteriously right after the page loads. This specific project uses VueJS, so I'm guessing Vue is the culprit behind this disappearing act. I will look into this later, but for now, I just wanted to share this because I thought it was a neat idea.
+This solution ended up working almost perfectly. However, one project had the script vanish mysteriously right after the page loads. This specific project uses VueJS, so I'm guessing Vue is the culprit behind this disappearing act. Investigating this is a task for [[Future Me]], so I'll leave it at that for now.

@@ -1,0 +1,26 @@
+---
+---
+[
+  {% assign sortedNotes = site.notes | sort: 'created_at' | reverse %}
+  {% assign count = 0 %}
+  {% for note in sortedNotes %}
+  {% capture note_type %}
+  {% if note.type and note.type != nil %}{{note.type | downcase}}{% else %}note{% endif %}
+  {% endcapture %}
+  {% assign note_type = note_type | strip %}
+  {% unless note.secret == true %}
+  {% assign count = count | plus: 1 %}
+  {
+    "title": "{{note.title | strip_newlines | strip | escape}}",
+    {% if note.image %}"image": "{{site.url}}{{note.image}}",{% endif %}
+    "url": "{{site.url}}{{note.url}}",
+    "type": "{{note_type}}",
+    "draft": {{note.draft}},
+    "created_at": "{{ note.created_at }}"
+  }{% unless forloop.last or count == 5 %},{% endunless %}
+  {% if count == 5 %}
+  {% break %}
+  {% endif %}
+  {% endunless %}
+  {% endfor %}
+]

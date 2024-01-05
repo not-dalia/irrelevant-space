@@ -1,4 +1,7 @@
 ---
+title: Future Me
+created_at: 2024-01-05T23:09:28+0000
+last_updated_at: 2024-01-05T23:09:28+0000
 type: note
 secret: true
 ---

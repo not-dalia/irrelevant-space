@@ -75,6 +75,22 @@ module Jekyll
         path = path.gsub(%r{^/|/$}, '')
         path
       end
+
+      def self.read_yaml(path)
+        begin
+          content = File.read(path)
+          if content =~ Jekyll::Document::YAML_FRONT_MATTER_REGEXP
+            content = Regexp.last_match.post_match
+            data = SafeYAML.load(Regexp.last_match(1))
+          end
+        rescue Psych::SyntaxError => e
+          Jekyll.logger.warn "YAML Exception reading #{path}: #{e.message}"
+        rescue StandardError => e
+          Jekyll.logger.warn "Error reading file #{path}: #{e.message}"
+        end
+        data ||= {}
+        data
+      end
     end
   end
 end

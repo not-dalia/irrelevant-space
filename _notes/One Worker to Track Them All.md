@@ -1,4 +1,5 @@
 ---
+last_updated_at: 2023-12-17 03:01:00 +0000
 title: "One Worker to Track Them All: Injecting Analytics Scripts into Multiple Websites with Cloudflare Workers"
 type: note
 topics:

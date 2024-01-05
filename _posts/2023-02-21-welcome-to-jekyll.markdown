@@ -1,4 +1,7 @@
 ---
+type: note
+created_at: 2024-01-05T23:10:08+0000
+last_updated_at: 2024-01-05T23:10:08+0000
 layout: note
 title:  "Welcome to Jekyll!"
 date:   2023-02-21 00:06:38 +0000

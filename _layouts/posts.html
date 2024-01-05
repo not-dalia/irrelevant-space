@@ -1,0 +1,67 @@
+---
+layout: default
+---
+<div class="col-wrapper" id="note-header">
+  <div class="main-col">
+    <h2>All Posts</h2>
+    <div class="note-subtitle">
+      Including notes, articles, and other endeavours.
+    </div>
+  </div>
+</div>
+
+<div class="content-wrapper" id="note-content">
+  <div class="col-wrapper">
+    <div class="main-col">
+      <div class="section">
+        <div id="endeavours">
+          {% assign sortedNotes = site.notes | sort: 'created_at' | reverse %}
+          {% for note in sortedNotes %}
+          {% capture note_type %}
+          {% if note.type and note.type != nil %}{{note.type | downcase}}{% else %}note{% endif %}
+          {% endcapture %}
+          {% assign note_type = note_type | strip %}
+          {% unless note.secret == true %}
+          <a href="{{note.url}}" class="endeavour type-{{note_type}}">
+            <div class="card hoverable">
+              {% if note.image %}
+              <img src="{{note.image}}" alt="" />
+              {% endif %}
+              <div class="card-title">{{ note.title }}</div>
+              <div class="info">
+                <div class="note-type">{{note_type}}</div>
+                {% if note.draft %}<div class="note-type draft">Draft</div>{% endif %}
+                <div class="age">{{ note.created_at | timeago }}</div>
+              </div>
+            </div>
+          </a>
+          {% endunless %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/macy@2"></script>
+<script>
+  var macy = Macy({
+    container: '#endeavours',
+    trueOrder: false,
+    waitForImages: false,
+    margin: 20,
+    columns: 3,
+    useContainerForBreakpoints: true,
+    breakAt: {
+      750: 2,
+      500: 1,
+    }
+  });
+
+  macy.runOnImageLoad(function () {
+    setTimeout(function () {
+      macy.recalculate(true);
+    }, 200);
+    // macy.recalculate(true);
+  }, true);
+</script>

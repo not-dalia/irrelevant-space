@@ -6,16 +6,16 @@
   "configurations": [
     {
       "name": "Debug Jekyll Site",
-      "type": "Ruby",
+      "type": "rdbg",
       "request": "launch",
       "cwd": "${workspaceRoot}",
-      "program": "C:/Ruby31-x64/bin/jekyll",
+      "script": "C:/Ruby31-x64/bin/jekyll",
       "args": [
-        "build",
+        "serve",
       ],
       "useBundler": true,
       "pathToBundler": "C:/Ruby31-x64/bin/bundler.bat",
-      "debuggerPort": "1235",
+      "debugPort": "1235",
     }
   ]
 }

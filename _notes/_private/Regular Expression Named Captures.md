@@ -14,7 +14,7 @@ This is how you name regular expression captures:
 
 also non-capturing groups
 
-Also good resouce: https://regex101.com/
+Also good resource: https://regex101.com/
 
 Also mandatory xkcd - relevant here possibly.
 

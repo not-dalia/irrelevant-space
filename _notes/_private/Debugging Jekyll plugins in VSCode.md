@@ -11,8 +11,8 @@ subtitle: "Struggles and solutions in setting up a ruby development environment.
 ---
 
 
->[!warning] Disclaimer
->I am not a Ruby expert. In fact this would be my first ruby project ever, so take everything here with a grain of salt.
+>[!warning]
+> This post is outdated and needs to be updated. It is so much easier now to debug Jekyll plugins in VSCode.
 
 When I first started developing my Jekyll plugin for this theme, I struggled with debugging the plugin code. My code was riddled with lines of `Jekyll.logger` and `puts` that I kept moving around to figure out what I was doing wrong, or what I was doing right. Looking for resources on debugging jekyll plugins didn't produce much, and it took a while to reach a configuration that worked, but I got there in the end. I thought I'd share my configuration and some of the problems I ran into, in case it can be useful for anyone else building Jekyll plugins using VSCode.
 
@@ -57,7 +57,7 @@ Which failed with error `Debugger terminal error: Process failed: spawn bundle E
 With bundler issues resolved, the next issue was the debugging port being used by something else. The error said `Fatal exception in DebugThread loop: Only one usage of each socket address (protocol/network address/port) is normally permitted. - bind(2) for "127.0.0.1" port 1234`. If you know what's using up the port process, then you can free it. I went for the easier route of just changing my debugger port to something else. I went for 1235.
 
 ## The Final Configuration
-After fixing the above issue I set up a breakpoint in the code and ran the debugger, and it worked!   This is my working configuration:
+After fixing the above issue I set up a breakpoint in the code and ran the debugger, and it worked! This is my working configuration:
 
 ```json
 {

@@ -1,7 +1,7 @@
 ---
 title: Future Me
-created_at: 2024-01-05T23:09:28+0000
-last_updated_at: 2024-01-05T23:09:28+0000
+created_at: 2023-12-17T03:01:00+00:00
+last_updated_at: 2023-12-17T03:01:00+00:00
 type: note
 secret: true
 ---

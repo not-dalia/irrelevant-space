@@ -8,9 +8,9 @@ html_id: note
       <div class="note-type">{% if page.type and page.type != nil %}{{page.type}}{% else %}Note{% endif %}</div>
       {% if page.draft %}<div class="note-type draft">Draft</div>{% endif %}
       <div class="separator">●</div>
-      <div class="age">Created {{ page.created_at | date: "%-d %B %Y" }}</div>
+      <div class="age">Created {{ page.created_at | date: "%-d %b %Y" }}</div>
       <div class="separator">●</div>
-      <div class="age">Last updated <date datetime="{{ page.last_updated_at }}">{{ page.last_updated_at | date: "%-d %B %Y" }}</date></div>
+      <div class="age">Last updated <date datetime="{{ page.last_updated_at }}">{{ page.last_updated_at | date: "%-d %b %Y" }}</date></div>
     </div>
     <h1><span>{{ page.title }}</span></h1>
     {% if page.subtitle %}<div class="note-subtitle">{{page.subtitle}}</div>{% endif %}

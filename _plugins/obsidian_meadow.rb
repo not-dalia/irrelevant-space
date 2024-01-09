@@ -78,6 +78,8 @@ module Jekyll
           git_created_at = DateTime.parse(git_created_at)
         rescue ArgumentError
           git_created_at = DateTime.now
+        rescue TypeError
+          git_created_at = DateTime.now
         end
         doc.data['created_at'] = git_created_at
         # Jekyll.logger.info "#{doc.path}", "Created at: #{doc.data['created_at'].to_s}"
@@ -89,6 +91,8 @@ module Jekyll
         begin
           git_last_modified = DateTime.parse(git_last_modified)
         rescue ArgumentError
+          git_last_modified = DateTime.now
+        rescue TypeError
           git_last_modified = DateTime.now
         end
         doc.data['last_updated_at'] = git_last_modified

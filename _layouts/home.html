@@ -46,7 +46,7 @@ layout: default
               <div class="info">
                 <div class="note-type">{{note_type}}</div>
                 {% if note.draft %}<div class="note-type draft">Draft</div>{% endif %}
-                <div class="age">{{ note.created_at | timeago }}</div>
+                <div class="age">{{ note.created_at | date: "%-d %b %y" }}</div>
               </div>
             </div>
           </a>

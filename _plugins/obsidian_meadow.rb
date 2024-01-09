@@ -65,24 +65,20 @@ module Jekyll
       # if file doesn't have created_at, set created_at to now and add it to frontmatter
       if doc.data['created_at'].nil? || doc.data['created_at'].empty?
         doc.data['created_at'] = DateTime.now
-        Jekyll.logger.info "#{doc.path}", "Created at: #{doc.data['created_at'].to_s}"
+        # Jekyll.logger.info "#{doc.path}", "Created at: #{doc.data['created_at'].to_s}"
       end
 
       # if file doesn't have last_updated_at, set last_updated_at to now and add it to frontmatter
       if doc.data['last_updated_at'].nil? || doc.data['last_updated_at'].empty?
         doc.data['last_updated_at'] = DateTime.now
-        Jekyll.logger.info "#{doc.path}", "Last updated at: #{doc.data['last_updated_at'].to_s}"
+        # Jekyll.logger.info "#{doc.path}", "Last updated at: #{doc.data['last_updated_at'].to_s}"
       end
 
       git_safe_directory_command = `git config --global --add safe.directory /github/workspace`
       # Jekyll.logger.info "git config --global --add safe.directory /github/workspace", git_safe_directory_command
-      git_full_log_command = `git log  --format=%ad --date=iso-strict -- "#{doc.path}"`
-      git_date_array = git_full_log_command.split("\n")
-      git_last_modified = git_date_array[0]
-      git_created_at = git_date_array[-1]
-      Jekyll.logger.info "file: #{doc.path}", git_full_log_command
-      Jekyll.logger.info "file: #{doc.path}", git_last_modified
-      Jekyll.logger.info "file: #{doc.path}", git_created_at
+      git_command_last_modified = `git log --follow -1 --format=%cd --date=iso-strict -- "#{doc.path}"`
+      git_command_created_at = `git log --diff-filter=A  --format=%ad --date=iso-strict -- "#{doc.path}"`
+      Jekyll.logger.info "file #{doc.path}", "created_at: #{doc.data['created_at'].to_s}, last_updated_at: #{doc.data['last_updated_at'].to_s}"
     end
 
     Jekyll::Hooks.register :site, :post_render do |site|

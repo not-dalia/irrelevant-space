@@ -77,8 +77,9 @@ module Jekyll
       git_safe_directory_command = `git config --global --add safe.directory /github/workspace`
       # Jekyll.logger.info "git config --global --add safe.directory /github/workspace", git_safe_directory_command
       git_command_last_modified = `git log --follow -1 --format=%cd --date=iso-strict -- "#{doc.path}"`
+      get_full_log_command = `git log  --format=%ad --date=iso-strict -- "#{doc.path}"`
       git_command_created_at = `git log --diff-filter=A  --format=%ad --date=iso-strict -- "#{doc.path}"`
-      Jekyll.logger.info "file #{doc.path}", "created_at: #{doc.data['created_at'].to_s}, last_updated_at: #{doc.data['last_updated_at'].to_s}"
+      Jekyll.logger.info "file: #{doc.path}", git_full_log_command
     end
 
     Jekyll::Hooks.register :site, :post_render do |site|

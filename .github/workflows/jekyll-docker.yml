@@ -14,7 +14,10 @@ jobs:
       - name: GitHub Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: '0'
+          fetch-depth: 0
+      - name: test Git logs date
+        run: |
+          git log --format=%ad --date=iso-strict -- "_notes/Future Me.md"
       - name: Bundler Cache
         uses: actions/cache@v1
         with:

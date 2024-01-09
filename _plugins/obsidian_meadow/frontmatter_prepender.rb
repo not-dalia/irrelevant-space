@@ -34,13 +34,13 @@ module Jekyll
         Jekyll.logger.info "YAML data for #{entry}:", "#{yaml_data}"
         # get entry file name without extension or path
         entry_name = Utils.get_filename_without_ext(entry)
-        created_at = yaml_data['created_at'] || DateTime.now.strftime('%Y-%m-%dT%H:%M:%S%z')
-        last_updated_at = yaml_data['last_updated_at'] || created_at
+        # created_at = yaml_data['created_at'] || DateTime.now.strftime('%Y-%m-%dT%H:%M:%S%z')
+        # last_updated_at = yaml_data['last_updated_at'] || created_at
         type = yaml_data['type'] || 'note'
         add_yaml_string = ""
         add_yaml_string += "title: #{entry_name}\n" if yaml_data['title'].nil? || yaml_data['title'].empty?
-        add_yaml_string += "created_at: #{created_at}\n" if yaml_data['created_at'].nil? || yaml_data['created_at'].to_s.empty?
-        add_yaml_string += "last_updated_at: #{last_updated_at}\n" if yaml_data['last_updated_at'].nil? || yaml_data['last_updated_at'].to_s.empty?
+        # add_yaml_string += "created_at: #{created_at}\n" if yaml_data['created_at'].nil? || yaml_data['created_at'].to_s.empty?
+        # add_yaml_string += "last_updated_at: #{last_updated_at}\n" if yaml_data['last_updated_at'].nil? || yaml_data['last_updated_at'].to_s.empty?
         add_yaml_string += "type: #{type}\n" if yaml_data['type'].nil? || yaml_data['type'].empty?
 
 

@@ -80,7 +80,7 @@ html_id: note
   function prepareLinkPreviews() {
     let linkPreview = document.getElementById('link-preview');
     let linkPreviewContent = document.getElementById('link-preview-content');
-    let links = document.querySelectorAll('a.internal-link:not(.wikilink-embed a):not(.embed-link):not(.broken-link)');
+    let links = document.querySelectorAll('a.internal-link:not(.wikilink-embed a):not(.embed-link):not(.broken-link):not(.reversefootnote)');
     links.forEach(link => {
       link.addEventListener('mouseover', (e) => {
         isHoveringLink = true;
@@ -166,11 +166,12 @@ html_id: note
         let preview = '';
 
         if (linkUrl.includes('#')) {
+          console.log(linkUrl);
           const fragmentId = linkUrl.split('#')[1];
           const fragmentEl = doc.getElementById(fragmentId);
-          if (fragmentEl) {
-            const headers = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6'];
-            const nextHeaders = headers.slice(headers.indexOf(fragmentEl.tagName) + 1);
+          const headers = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'LI'];
+          if (fragmentEl && headers.indexOf(fragmentEl.tagName)) {
+            const nextHeaders = headers.slice(headers.indexOf(fragmentEl.tagName));
             const elements = [fragmentEl];
             let nextEl = fragmentEl.nextElementSibling;
             while (nextEl && !nextHeaders.includes(nextEl.tagName)) {

@@ -5,7 +5,7 @@ module Jekyll
   module ObsidianMeadow
     class Kramdown::Parser::Obsidian < Kramdown::Parser::GFM
 
-      WIKILINKS_MATCH = /\[\[(.*?)\]\]/.freeze
+      WIKILINKS_MATCH = /\[\[(.*?)\]\]\n*/.freeze
       WIKILINK_LINK_MATCH = /(?<!\!)#{WIKILINKS_MATCH}/.freeze
       WIKILINK_EMBED_MATCH = /\!#{WIKILINKS_MATCH}/.freeze
       define_parser(:wikilinks, WIKILINK_LINK_MATCH, '\[\[')
@@ -36,7 +36,7 @@ module Jekyll
         link_el = Element.new(:a, nil, {'href' => wikilink.url, 'class' => 'internal-link embed-link'}, location: line_number)
         add_text(wikilink.title || wikilink.url , link_el)
         embed_el.children << link_el
-        parse_blocks(embed_el)
+        # parse_spans(embed_el)
         @tree.children << embed_el
 
         embed_el

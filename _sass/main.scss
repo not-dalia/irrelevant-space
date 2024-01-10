@@ -26,7 +26,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Frank Ruhl Libre', sans-serif;
-  font-size: 18px;
+  font-size: 20px;
 }
 
 html {
@@ -102,7 +102,7 @@ header {
   h1 {
     font-family: 'Raleway', sans-serif;
     font-weight: 400;
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     margin: 0;
   }
 
@@ -110,8 +110,8 @@ header {
     display: flex;
     flex-direction: row;
     align-items: flex-end;
-    gap: 1.2rem;
-    font-size: 1.1rem;
+    gap: 1rem;
+    font-size: 1rem;
     font-weight: 500;
     font-family: 'Raleway', sans-serif;
   }
@@ -119,7 +119,7 @@ header {
 
 main {
   width: 100%;
-  margin-top: 6rem;
+  margin-top: 5rem;
   // margin-bottom: 2rem;
   display: flex;
   flex-direction: column;
@@ -161,18 +161,18 @@ main {
 .section {
   width: 100%;
   .section-title {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     text-transform: uppercase;
     font-weight: 500;
     font-family: 'Raleway', sans-serif;
     margin: 0;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.3rem;
   }
 
   .section-description {
-    font-size: 1.1rem;
+    font-size: 1rem;
     margin: 0;
-    margin-bottom: 1.2rem;
+    margin-bottom: 1rem;
     line-height: 1.6rem;
   }
 
@@ -188,7 +188,7 @@ main {
 
   a:hover {
     .more-arrow {
-      transform: translateX(0.2rem);
+      transform: translateX(0.1rem);
     }
   }
 }
@@ -198,7 +198,7 @@ main {
   padding: 1rem $body-padding-x;
   padding: 1rem var(--body-padding-x);
   max-width: $main-container-width;
-  margin-bottom: 6rem;
+  margin-bottom: 5rem;
 
   .side-col {
     max-width: 180px;
@@ -211,8 +211,8 @@ main {
   }
 
   .about-me {
-    font-size: 3.4rem;
-    line-height: 4.4rem;
+    font-size: 3rem;
+    line-height: 4rem;
     margin-bottom: 1rem;
     font-weight: 400;
     font-family: 'Raleway', sans-serif;
@@ -220,13 +220,13 @@ main {
 
   .period {
     font-family: 'Frank Ruhl Libre', sans-serif;
-    font-size: 4rem;
+    font-size: 3.6rem;
     color: $irrelevant-color-period;
   }
 
   .about-site {
-    font-size: 1.6rem;
-    line-height: 3rem;
+    font-size: 1.4rem;
+    line-height: 2.6rem;
     margin-bottom: 1rem;
     font-weight: 400;
     font-family: 'Raleway', sans-serif;
@@ -235,8 +235,8 @@ main {
 
 .content-wrapper {
   background: $secondary-bg-color;
-  padding: 2rem $body-padding-x;
-  padding: 2rem var(--body-padding-x);
+  padding: 1.6rem $body-padding-x;
+  padding: 1.6rem var(--body-padding-x);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -251,8 +251,8 @@ main {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  margin-bottom: 2rem;
-  margin-top: 0.6rem;
+  margin-bottom: 1.6rem;
+  margin-top: 0.4rem;
 
   .endeavour {
     display: flex;
@@ -267,14 +267,14 @@ main {
     img {
       max-width: 100%;
       height: 220px;
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.5rem;
     }
 
     .card-title {
-      font-size: 1.4rem;
+      font-size: 1.2rem;
       font-weight: 400;
-      line-height: 1.8rem;
-      margin-bottom: 0.3rem;
+      line-height: 1.6rem;
+      margin-bottom: 0.2rem;
       width: 100%;
       text-align: left;
       font-family: 'Raleway', sans-serif;
@@ -284,19 +284,19 @@ main {
       text-transform: uppercase;
       display: flex;
       align-items: center;
-      margin-top: 0.6rem;
+      margin-top: 0.4rem;
       width: 100%;
 
       .age {
         color: $irrelevant-color-dark;
-        font-size: 0.7rem;
+        font-size: 0.6rem;
         font-weight: 600;
         font-family: 'Raleway', sans-serif;
       }
     }
 
     .card {
-      padding: 0.8rem;
+      padding: 0.6rem;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -320,27 +320,27 @@ main {
 
 #notes {
   .notes-row {
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.4rem;
     box-shadow: none;
     display: flex;
     width: 100%;
 
     .card {
-      padding: 0.6em;
+      padding: 0.5em;
       width: 100%;
     }
 
     .note-title {
       font-family: 'Raleway', sans-serif;
-      line-height: 1.6rem;
+      line-height: 1.4rem;
       font-weight: 500;
     }
   }
 }
 
 #note-header {
-  padding: 1rem $body-padding-x 2rem $body-padding-x;
-  padding: 1rem var(--body-padding-y) 2rem var(--body-padding-x);
+  padding: 0.8rem $body-padding-x 1.8rem $body-padding-x;
+  padding: 0.8rem var(--body-padding-y) 1.8rem var(--body-padding-x);
   .main-col {
     max-width: $main-container-width;
     display: flex;
@@ -351,7 +351,7 @@ main {
     font-family: 'Raleway', sans-serif;
     text-transform: uppercase;
     margin-left: 4px;
-    line-height: 1.4rem;
+    line-height: 1.2rem;
     .note-type {
       display: inline-block;
     }
@@ -361,33 +361,33 @@ main {
     .separator {
       color: $irrelevant-color-semi-dark;
       margin: 0 0.2rem;
-      font-size: 0.8rem;
+      font-size: 0.7rem;
     }
     .age {
-      font-size: 0.8rem;
+      font-size: 0.7rem;
       font-weight: 600;
     }
   }
   h1 {
     font-family: 'Raleway', sans-serif;
-    font-size: 3.4rem;
-    line-height: 3.8rem;
+    font-size: 3rem;
+    line-height: 3.2rem;
     font-weight: 400;
-    margin: 0.3rem 0 1rem 0;
+    margin: 0.3rem 0 0.8rem 0;
   }
 
   h2 {
     text-transform: uppercase;
     font-family: 'Raleway', sans-serif;
     font-weight: 400;
-    font-size: 3rem;
+    font-size: 2.6rem;
     margin: 0.3rem 0 0.5rem 0;
-    line-height: 3rem;
+    line-height: 2.6rem;
   }
 
   .note-subtitle {
-    font-size: 1.4rem;
-    line-height: 1.8rem;
+    font-size: 1.2rem;
+    line-height: 1.6rem;
     font-weight: 400;
     margin: 0.6rem 0 0.2rem 0;
   }
@@ -395,7 +395,7 @@ main {
 
 #note-content {
   p, li, ul {
-    line-height: 1.5rem;
+    line-height: 1.8rem;
   }
 
   .main-col {
@@ -409,7 +409,7 @@ main {
     h2 {
       margin: 0;
       margin-bottom: 0.6rem;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       font-family: 'Raleway', sans-serif;
       font-weight: 500;
       text-transform: uppercase;
@@ -417,16 +417,17 @@ main {
   }
 
   .note-side-wrapper {
-    margin: 1.7rem 0;
-    padding: 1rem;
+    margin: 1.5rem 0;
+    padding: 0.8rem;
   }
 
   .topics {
-    padding: 0 0.5rem;
+    padding: 0 0.4rem;
     font-family: 'Raleway', sans-serif;
-    line-height: 2rem;
+    line-height: 1.8rem;
+    font-size: 0.9rem;
     a {
-      margin-right: 0.5rem
+      margin-right: 0.4rem
     }
   }
 
@@ -434,6 +435,7 @@ main {
     font-family: 'Raleway', sans-serif;
     list-style-type: none;
     padding-left: 1rem;
+    font-size: 0.9rem;
     li {
       margin-bottom: 0.5rem;
       position: relative;
@@ -441,9 +443,9 @@ main {
         content: '';
         position: absolute;
         left: -1rem;
-        top: 0.6rem;
-        width: 0.4rem;
-        height: 0.4rem;
+        top: 0.7rem;
+        width: 0.5rem;
+        height: 0.5rem;
         border-radius: 50%;
         background-color: $irrelevant-color-medium;
       }
@@ -452,15 +454,15 @@ main {
 }
 
 .note-type {
-  padding: 0 0.3rem;
+  padding: 0 0.2rem;
   color: #0274A2;
   // background: $irrelevant-color-semi-dark;
   border-radius: 3px;
   background: $irrelevant-color-light;
   font-family: 'Raleway', sans-serif;
-  font-weight: 600;
-  margin-right: 0.3rem;
-  font-size: 0.7rem;
+  font-weight: 700;
+  margin-right: 0.2rem;
+  font-size: 0.6rem;
   width: fit-content;
   text-transform: uppercase;
   display: inline-block;
@@ -510,6 +512,10 @@ main {
     height: 3rem;
   }
 
+  & *:not(ol, ul):has(li) {
+    list-style-type: none;
+  }
+
   #link-preview-content {
     overflow-y: auto;
     width: 410px;
@@ -517,7 +523,7 @@ main {
     max-height: 410px;
     height: 410px;
     //  overflow-x: hidden;
-    padding: 0 1rem 1rem 1rem;
+    padding: 0 0.8rem 0.8rem 0.8rem;
     position: relative;
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
@@ -541,30 +547,30 @@ main {
 }
 
 .topic-list {
-  margin-top: 0.5rem;
+  margin-top: 0.4rem;
   .topic-list-title {
     font-family: 'Raleway', sans-serif;
     font-weight: 500;
-    font-size: 0.9rem;
-    margin-bottom: 0.5rem;
-    margin-right: 1rem;
+    font-size: 0.8rem;
+    margin-bottom: 0.3rem;
+    margin-right: 0.6rem;
   }
 
   .topic {
     display: inline-block;
-    margin-right: 0.5rem;
-    margin-bottom: 0.5rem;
-    padding: 0.2rem 0.5rem;
+    margin-right: 0.4rem;
+    margin-bottom: 0.4rem;
+    padding: 0.1rem 0.4rem;
     border-radius: 3px;
     background: $irrelevant-color-light;
     font-family: 'Raleway', sans-serif;
     font-weight: 600;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     text-transform: uppercase;
     display: inline-block;
     text-align: center;
     min-width: 70px;
-    line-height: 1.3rem;
+    line-height: 1.2rem;
     box-shadow: none;
     border: none;
 
@@ -596,7 +602,7 @@ main {
 
 @media only screen and (max-width: 1000px) {
   html {
-    font-size: 16px;
+    font-size: 18px;
   }
 
   header {
@@ -656,11 +662,23 @@ main {
 @media only screen and (max-width: 620px) {
   body {
     // padding: 20px;
-    --body-padding-x: 0.5rem;
+    --body-padding-x: 0.4rem;
   }
 
   .main-col {
-    padding: 0 0.5rem;
+    padding: 0 0.4rem;
+  }
+
+  #link-preview {
+    max-width: 90%;
+  }
+
+  #link-preview-content {
+    max-width: 90% !important;
+  }
+
+  header {
+    flex-wrap: wrap;
   }
 }
 
@@ -668,4 +686,16 @@ body,
 main,
 #endeavours {
   width: 100%;
+}
+
+.footnotes {
+  margin-top: 3rem;
+  border-top: 1px solid #aaa;
+  font-size: 0.9rem;
+  p {
+    line-height: 1.4rem !important;
+  }
+  ol {
+    padding-left: 1.2rem;
+  }
 }

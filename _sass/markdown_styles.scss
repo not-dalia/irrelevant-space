@@ -8,15 +8,16 @@ code {
   border: 1px solid #eee;
   padding: 0 2px;
   font-family: 'Fira Code', monospace;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
+  word-break: break-word;
 }
 
 pre {
   background: #fff;
   border: 1px solid #ddd;
-  padding: 1.2rem;
-  margin: 1.2rem 1.8rem;
-  margin: 1.2rem var(--blockquote-margin);
+  padding: 1.1rem;
+  margin: 1.1rem 1.6rem;
+  margin: 1.1rem var(--blockquote-margin);
   border-radius: 3px;
   white-space: pre-wrap;
 
@@ -36,7 +37,7 @@ pre {
   border: 2px solid white;
   box-shadow: 0px 2px 4px 0px hsla(0, 0%, 0%, .1);
   background: white;
-  line-height: 1.5rem;
+  line-height: 1.4rem;
   color: $main-text-color;
   position: relative;
   margin: 1.8rem 0;
@@ -48,7 +49,7 @@ pre {
   align-items: center;
 
   .meadow-callout {
-    margin: 1rem 0;
+    margin: 0.8rem 0;
     width: auto;
     flex: 1;
     justify-self: stretch;
@@ -62,15 +63,15 @@ pre {
 
 
   .meadow-callout-title {
-    padding: 0.5rem 1.8rem;
-    padding: 0.5rem var(--blockquote-margin);
+    padding: 0.4rem 1.6rem;
+    padding: 0.4rem var(--blockquote-margin);
     // border-radius: 3px 3px 0 0;
     margin: 0;
     font-family: 'Raleway', sans-serif;
     text-transform: uppercase;
     font-weight: bold;
     background-color: white;
-    font-size: 1rem;
+    font-size: 0.95rem;
     color: $irrelevant-color-dark;
     width: 100%;
     background-color: $irrelevant-color-medium;
@@ -81,8 +82,8 @@ pre {
 
   .meadow-callout-content {
     width: 100%;
-    padding: 0.6rem 1.8rem;
-    padding: 0.6rem var(--blockquote-margin);
+    padding: 0.5rem 1.6rem;
+    padding: 0.5rem var(--blockquote-margin);
     // margin: 0.5rem 0;
 
     &:empty {
@@ -93,11 +94,11 @@ pre {
   p {
     white-space: pre-wrap;
     width: 100%;
-    margin: 0.5rem 0;
+    margin: 0.4rem 0;
   }
 
   .meadow-callout-icon {
-    width: 1.1rem;
+    width: 1rem;
     margin-right: 0.4rem;
   }
 }
@@ -242,15 +243,15 @@ pre {
 
 .blockquote {
   border-left: 3px solid $irrelevant-color-period;
-  padding: 0 1.8rem;
+  padding: 0 1.6rem;
   padding: 0 var(--blockquote-margin);
-  margin: 1rem 0;
+  margin: 0.8rem 0;
   color: $main-text-color;
   font-style: italic;
   width: 100%;
   position: relative;
   font-family: 'Raleway', sans-serif;
-  font-size: 1rem;
+  font-size: 0.8rem;
 
   &::before {
     content: '';
@@ -261,11 +262,11 @@ pre {
     background-color: $secondary-bg-color;
     padding: 0.4rem;
     background-image: url('/assets/callout-icons/quotes.svg');
-    background-size: 1.2rem 1.2rem;
+    background-size: 1.1rem 1.1rem;
     background-position: center;
     background-repeat: no-repeat;
-    height: 1.2rem;
-    width: 1.2rem;
+    height: 1.1rem;
+    width: 1.1rem;
   }
 
   cite {
@@ -275,19 +276,19 @@ pre {
 
   p {
     white-space: pre-wrap;
-    line-height: 2rem !important;
+    line-height: 1.8rem !important;
   }
 }
 
 .wikilink-embed {
-  margin: 1.8rem 0;
+  margin: 1.6rem 0;
   color: $main-text-color;
   width: 100%;
   position: relative;
   display: flex;
   flex-direction: column;
   border-left: 3px solid $irrelevant-color-period;
-  padding: 0 1.8rem;
+  padding: 0 1.6rem;
   padding: 0 var(--blockquote-margin);
 
   &.wikilink-asset-embed {
@@ -297,7 +298,7 @@ pre {
     padding: 0;
 
     a.embed-link {
-      margin-left: -2rem;
+      margin-left: -1.8rem;
       display: none;
     }
   }
@@ -315,7 +316,7 @@ pre {
     display: flex;
     align-items: center;
     width: fit-content;
-    margin-left: -1.8rem;
+    margin-left: -1.6rem;
     margin-left: calc(-1 * var(--blockquote-margin));
     text-decoration: underline;
     text-decoration-color: $irrelevant-color-semi-dark;
@@ -324,10 +325,10 @@ pre {
     &::before {
       content: '';
       display: block;
-      width: 2rem;
-      height: 2rem;
+      width: 1.8rem;
+      height: 1.8rem;
       background-image: url('/assets/link.svg');
-      background-size: 1.6rem 1.6rem;
+      background-size: 1.4rem 1.4rem;
       background-position: center;
       background-repeat: no-repeat;
     }
@@ -337,44 +338,49 @@ pre {
 ul, ol {
   // margin: 1.8rem 0;
   // margin: 1.8rem var(--blockquote-margin);
-  padding-left: 1.8rem;
+  padding-left: 1.6rem;
   padding-left: var(--blockquote-margin);
 }
 
 h1 {
-  font-size: 2.5rem;
+  font-size: 2.3rem;
   font-weight: 400;
 }
 
 h2 {
-  font-size: 2.2rem;
+  font-size: 2.1rem;
   font-weight: 500;
 }
 
 h3 {
-  font-size: 1.9rem;
-  font-weight: 500;
-}
-
-h4 {
   font-size: 1.6rem;
   font-weight: 500;
 }
 
+h4 {
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
 h5 {
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   font-weight: 600;
 }
 
 h6 {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 600;
 }
 
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Raleway', sans-serif;
-  margin: 1.8rem 0 0.5rem 0;
+  margin: 1.6rem 0 0.4rem 0;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
 }
 
 

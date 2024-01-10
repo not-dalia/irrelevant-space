@@ -65,7 +65,7 @@ While this is a neat trick, the priority should always be given to the dates spe
 ### 3. To --follow or not to --follow
 The `--follow` [^5] option in `git log` is used to follow the history of a file across renames. Is a renamed post a new post or an update to an existing post? That's your decision.
 
-### 4. Avoid using timeago
+### 4. Avoid using timeago for post dates
 After hours of trying to figure out why Jekyll was still showing "Today" for a post I modified last week, I remembered that I am using the `timeago` filter from [`jekyll-timeago`](https://github.com/markets/jekyll-timeago) plugin. I was rendering the dates using {% raw %}`{{ doc.last_modified_at | timeago }}`{% endraw %}. Now as you know Jekyll is a **static** site generator, and it renders this as HTML at the time of build, and **<u>only</u>** then. This means any date rendered with `timeago` is hardcoded as is in the HTML and won't change until the next build. I switched all the dates to the `"%-d %b %y"` format for now. Might use [`moment.js`](https://momentjs.com/) in the future to get the `timeago` dates back.
 
 [^1]: [Jekyll Hooks](https://jekyllrb.com/docs/plugins/hooks/) are a way to run code at specific points in the Jekyll build process. The `:documents :post_init` hook runs after the documents have been read and parsed, but before it is rendered.

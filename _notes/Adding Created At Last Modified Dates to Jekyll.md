@@ -1,6 +1,9 @@
 ---
 type: note
 title: Adding "Created At" and "Last Updated" Dates to Jekyll
+topics:
+  - Jekyll
+  - Web development
 ---
 
 In making the Jekyll theme I am using here, I wanted each note to show a Created At and a Last Updated date. Jekyll by default supports dates for post types. The date would be specified in the title of the post, e.g. `2020-08-01-My-Post-Title.md`. The date is then parsed by Jekyll and is available in `post.date`. Since I'm using collections instead of posts, and mainly using Obsidian to create and edit my files, my markdown files as they are being generated at the moment don't have a date in the title. I was already writing a set of plugins to add Obsidian support to Jekyll, so I thought I'd write a plugin that tells Jekyll to use the file's creation date as the post date unless it is specified in the frontmatter.

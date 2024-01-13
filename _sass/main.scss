@@ -10,7 +10,6 @@ $irrelevant-color-medium: #C6F0FF;
 $irrelevant-color-period: #3EBEEE;
 $irrelevant-color-semi-dark: #0298D1;
 $irrelevant-color-dark: #34537A;
-$main-col-width: 800px;
 $side-col-width: 370px;
 $main-container-width: 1200px;
 $body-padding-y: 1rem;
@@ -268,6 +267,7 @@ main {
       max-width: 100%;
       height: 220px;
       margin-bottom: 0.5rem;
+      object-fit: cover;
     }
 
     .card-title {

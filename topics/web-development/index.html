@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html lang="en">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/assets/favicon.svg" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;family=Frank+Ruhl+Libre:wght@300;400;500;600;700&amp;family=Raleway:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles/styles.css">
+  <link rel="stylesheet" href="/styles/tango.css">
+  <title>Irrelevant Space</title>
+</head>
+
+<body id="home">
+  <header>
+    <h1><a href="/">irrelevant space</a></h1>
+    <div class="nav">
+      <a href="/notes">notes</a>
+      <a href="/endeavours">endeavours</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="col-wrapper" id="note-header">
+  <div class="main-col">
+    <h2>Web development</h2>
+    <div class="note-subtitle">
+      Notes and endeavours related to "Web development".
+    </div>
+  </div>
+</div>
+
+<div class="content-wrapper" id="note-content">
+  <div class="col-wrapper">
+    <div class="main-col">
+      <div class="section">
+        <div id="endeavours">
+          
+          
+          
+          
+          
+          <a href="/css-trivia-masonry-grid-layout/" class="endeavour type-note">
+            <div class="card hoverable">
+              
+              <img src="/assets/masonry-grid.png" alt="">
+              
+              <div class="card-title">CSS Trivia: Masonry Grid Layout</div>
+              <div class="info">
+                <div class="note-type">note</div>
+                
+                <div class="age">13 Jan 24</div>
+              </div>
+            </div>
+          </a>
+          
+          
+          
+          
+          
+          <a href="/adding-created-at-last-modified-dates-to-jekyll/" class="endeavour type-note">
+            <div class="card hoverable">
+              
+              <div class="card-title">Adding "Created At" and "Last Updated" Dates to Jekyll</div>
+              <div class="info">
+                <div class="note-type">note</div>
+                
+                <div class="age">10 Jan 24</div>
+              </div>
+            </div>
+          </a>
+          
+          
+          
+          
+          
+          <a href="/one-worker-to-track-them-all/" class="endeavour type-note">
+            <div class="card hoverable">
+              
+              <div class="card-title">One Worker to Track Them All: Injecting Analytics Scripts into Multiple Websites with Cloudflare Workers</div>
+              <div class="info">
+                <div class="note-type">note</div>
+                
+                <div class="age">17 Dec 23</div>
+              </div>
+            </div>
+          </a>
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/macy@2"></script>
+<script>
+  var macy = Macy({
+    container: '#endeavours',
+    trueOrder: false,
+    waitForImages: false,
+    margin: 20,
+    columns: 3,
+    useContainerForBreakpoints: true,
+    breakAt: {
+      750: 2,
+      500: 1,
+    }
+  });
+
+  macy.runOnImageLoad(function () {
+    setTimeout(function () {
+      macy.recalculate(true);
+    }, 200);
+    // macy.recalculate(true);
+  }, true);
+</script>
+
+  </main>
+</body>
+
+</html>

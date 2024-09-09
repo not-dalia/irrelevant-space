@@ -1,0 +1,268 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html lang="en">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/assets/favicon.svg" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;family=Frank+Ruhl+Libre:wght@300;400;500;600;700&amp;family=Raleway:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles/styles.css">
+  <link rel="stylesheet" href="/styles/tango.css">
+  <title>Irrelevant Space - Notes</title>
+</head>
+
+<body id="home">
+  <header>
+    <h1><a href="/">irrelevant space</a></h1>
+    <div class="nav">
+      <a href="/notes">notes</a>
+      <a href="/endeavours">endeavours</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="col-wrapper" id="note-header">
+  <div class="main-col">
+    <h2>Notes</h2>
+    <div class="note-subtitle">
+      From musings to guides, a collection of ideas and insights.
+    </div>
+    <div class="topic-list">
+      <span class="topic-list-title">Topics</span>
+      
+       <button onclick="toggleTopic(this)" data-topic="web development" class="topic" aria-pressed="false">Web development</button>
+        
+        
+       <button onclick="toggleTopic(this)" data-topic="cloudflare" class="topic" aria-pressed="false">Cloudflare</button>
+        
+        
+       <button onclick="toggleTopic(this)" data-topic="javascript" class="topic" aria-pressed="false">JavaScript</button>
+        
+        
+       <button onclick="toggleTopic(this)" data-topic="css" class="topic" aria-pressed="false">CSS</button>
+        
+        
+       <button onclick="toggleTopic(this)" data-topic="jekyll" class="topic" aria-pressed="false">Jekyll</button>
+        
+        
+        <button onclick="showAllTopics(this)" class="topic topic-show-more-button" aria-pressed="false">Show all
+          topics</button>
+    </div>
+    <div class="topic-list">
+      <span class="topic-list-title">Types</span>
+      
+      
+      
+      <button onclick="toggleType(this)" data-type="note" class="topic" aria-pressed="false">note</button>
+      
+    </div>
+  </div>
+</div>
+
+<div class="content-wrapper" id="note-content">
+  <div class="col-wrapper">
+    <div class="main-col">
+      <div class="section">
+        <div id="endeavours">
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="/css-trivia-masonry-grid-layout/" class="endeavour type-note" data-topics="css,web development" data-type="note">
+            <div class="card hoverable">
+              
+              <img src="/assets/masonry-grid.png" alt="">
+              
+              <div class="card-title">CSS Trivia: Masonry Grid Layout</div>
+              <div class="info">
+                <div class="note-type">note</div>
+                
+                <div class="age">13 Jan 24</div>
+              </div>
+            </div>
+          </a>
+          
+          
+          
+          
+          
+          
+          <a href="/adding-created-at-last-modified-dates-to-jekyll/" class="endeavour type-note" data-topics="jekyll,web development" data-type="note">
+            <div class="card hoverable">
+              
+              <div class="card-title">Adding "Created At" and "Last Updated" Dates to Jekyll</div>
+              <div class="info">
+                <div class="note-type">note</div>
+                
+                <div class="age">10 Jan 24</div>
+              </div>
+            </div>
+          </a>
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="/one-worker-to-track-them-all/" class="endeavour type-note" data-topics="web development,javascript,cloudflare" data-type="note">
+            <div class="card hoverable">
+              
+              <div class="card-title">One Worker to Track Them All: Injecting Analytics Scripts into Multiple Websites with Cloudflare Workers</div>
+              <div class="info">
+                <div class="note-type">note</div>
+                
+                <div class="age">17 Dec 23</div>
+              </div>
+            </div>
+          </a>
+          
+          
+          
+          <div id="note-count" data-count="3" class="hidden"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/macy@2"></script>
+<script>
+  let count = document.getElementById('note-count').getAttribute('data-count');
+  let topicListElements = document.querySelectorAll('.topic-list');
+  if (count == 0) {
+    topicListElements.forEach(function (topicListElement) {
+      topicListElement.classList.add('hidden');
+    });
+  } else {
+    topicListElements.forEach(function (topicListElement) {
+      topicListElement.classList.remove('hidden');
+    });
+
+    var macy = Macy({
+      container: '#endeavours',
+      trueOrder: false,
+      waitForImages: false,
+      margin: 20,
+      columns: 3,
+      useContainerForBreakpoints: true,
+      breakAt: {
+        750: 2,
+        500: 1,
+      }
+    });
+
+    macy.runOnImageLoad(function () {
+      setTimeout(function () {
+        macy.recalculate(true);
+      }, 200);
+      // macy.recalculate(true);
+    }, true);
+
+    var selectedTopics = [];
+    var selectedTypes = [];
+
+    function toggleTopic (element) {
+      var topic = element.getAttribute('data-topic');
+      if (element.getAttribute('aria-pressed') == 'false') {
+        element.setAttribute('aria-pressed', 'true');
+        element.classList.add('selected');
+        selectedTopics.push(topic);
+      } else {
+        element.setAttribute('aria-pressed', 'false');
+        element.classList.remove('selected');
+        selectedTopics = selectedTopics.filter(function (item) {
+          return item !== topic;
+        });
+      }
+      filterNotes();
+    }
+
+    function filterNotes () {
+      var notes = document.querySelectorAll('#endeavours a.endeavour');
+      if (selectedTopics.length > 0) {
+        notes.forEach(function (note) {
+          var topics = note.getAttribute('data-topics').split(',');
+          var show = false;
+          topics.forEach(function (topic) {
+            if (selectedTopics.includes(topic)) {
+              show = true;
+            }
+          });
+          if (show) {
+            note.classList.remove('hidden');
+          } else {
+            note.classList.add('hidden');
+          }
+        });
+      } else {
+        notes.forEach(function (note) {
+          note.classList.remove('hidden');
+        });
+      }
+      macy.recalculate(true);
+    }
+
+    function toggleType (element) {
+      var type = element.getAttribute('data-type');
+      if (element.getAttribute('aria-pressed') == 'false') {
+        element.setAttribute('aria-pressed', 'true');
+        element.classList.add('selected');
+        selectedTypes.push(type);
+      } else {
+        element.setAttribute('aria-pressed', 'false');
+        element.classList.remove('selected');
+        selectedTypes = selectedTypes.filter(function (item) {
+          return item !== type;
+        });
+      }
+      filterTypes();
+    }
+
+    function filterTypes () {
+      var notes = document.querySelectorAll('#endeavours a.endeavour');
+      if (selectedTypes.length > 0) {
+        notes.forEach(function (note) {
+          var type = note.getAttribute('data-type');
+          if (selectedTypes.includes(type)) {
+            note.classList.remove('hidden');
+          } else {
+            note.classList.add('hidden');
+          }
+        });
+      } else {
+        notes.forEach(function (note) {
+          note.classList.remove('hidden');
+        });
+      }
+      macy.recalculate(true);
+    }
+
+    function showAllTopics () {
+      var topics = document.querySelectorAll('.topic-show-more');
+      topics.forEach(function (topic) {
+        topic.classList.remove('hidden');
+      });
+      document.querySelector('.topic-show-more-button').classList.add('hidden');
+    }
+  }
+</script>
+
+  </main>
+</body>
+
+</html>

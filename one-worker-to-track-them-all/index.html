@@ -1,0 +1,318 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html lang="en">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/assets/favicon.svg" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&amp;family=Frank+Ruhl+Libre:wght@300;400;500;600;700&amp;family=Raleway:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles/styles.css">
+  <link rel="stylesheet" href="/styles/tango.css">
+  <title>Irrelevant Space - One Worker to Track Them All: Injecting Analytics Scripts into Multiple Websites with Cloudflare Workers</title>
+</head>
+
+<body id="home">
+  <header>
+    <h1><a href="/">irrelevant space</a></h1>
+    <div class="nav">
+      <a href="/notes">notes</a>
+      <a href="/endeavours">endeavours</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="col-wrapper" id="note-header">
+  <div class="main-col">
+    <div class="info">
+      <div class="note-type">note</div>
+      
+      <div class="separator">●</div>
+      <div class="age">Created 17 Dec 2023</div>
+      <div class="separator">●</div>
+      <div class="age">Last updated <date datetime="2023-12-17 03:01:00 +0000">17 Dec 2023</date>
+</div>
+    </div>
+    <h1><span>One Worker to Track Them All: Injecting Analytics Scripts into Multiple Websites with Cloudflare Workers</span></h1>
+    
+  </div>
+</div>
+
+<div class="content-wrapper" id="note-content">
+  <div class="col-wrapper">
+    <div class="main-col">
+      <p>For a while now, I’ve been creating mini web tools to test out ideas or as tiny helpers for myself. I usually publish them on individual subdomains, which might not be the best idea, but I like the concept of a short, easy-to-remember URL. Recently, I discovered that some of these tools actually have a few users, which made me consider adding analytics to them. After a bit of research, I settled on <a href="https://umami.is/" class="external-link" target="_blank">umami</a>. It’s a great little privacy-conscious tool with exactly what I need and nothing more.</p>
+
+<p>The issue with having so many subdomains is that you’d have to add a different tracking script to each one of them, treating them as individual websites. Modifying each project to add the script sounds a bit tedious. If only there was a way to map each subdomain to its script.</p>
+
+<h2 id="the-solution">The Solution</h2>
+<p>Except that there is. <a href="https://cloudflare.com/" class="external-link" target="_blank">Cloudflare</a> is pretty great for free SSL certificates and DNS management, but they also offer a free Workers plan. A <a href="https://developers.cloudflare.com/workers/" class="external-link" target="_blank">Cloudflare worker</a> is basically JavaScript code that runs on Cloudflare’s edge network and handles HTTP traffic. You can do a lot with workers, including modifying/rewriting HTML responses. You can probably see where this is going: If a worker can modify HTML responses, then it can inject the umami script into every HTML response.</p>
+
+<p>I modified one of the existing workers examples, and it worked on the first attempt. Initially, the first version of the worker had a dictionary mapping each hostname to the relevant Umami ID and injected that accordingly. I’ve changed that since to use environment variables. This way, adding a new subdomain is as simple as adding the hostname and the Umami ID to the worker’s environment variables, which you can do from Cloudflare’s dashboard.</p>
+
+<h2 id="the-execution">The Execution</h2>
+<p>Getting started with Cloudflare workers is pretty simple. You can follow the <a href="https://developers.cloudflare.com/workers/get-started/guide/" class="external-link" target="_blank">get started guide</a> to get a basic worker up and running. The worker I ended up with is pretty simple. When a request comes in, the worker checks if the response is HTML. If it is, it looks up the hostname in the environment variables and uses <a href="https://developers.cloudflare.com/workers/runtime-apis/html-rewriter/" class="external-link" target="_blank"><code class="language-plaintext highlighter-rouge">HTTPRewriter</code></a> to rewrite the <code class="language-plaintext highlighter-rouge">&lt;head&gt;</code> tag and inject the umami script. If the response is not HTML or the hostname is not found in the environment variables, the worker just passes the response through.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="k">default</span> <span class="p">{</span>
+  <span class="k">async</span> <span class="nf">fetch</span><span class="p">(</span><span class="nx">request</span><span class="p">,</span> <span class="nx">env</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">BASE_UMAMI_URL</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">https://eu.umami.is/script.js</span><span class="dl">"</span><span class="p">;</span>
+    <span class="kd">const</span> <span class="nx">hostname</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">URL</span><span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">url</span><span class="p">).</span><span class="nx">hostname</span><span class="p">;</span>
+    <span class="c1">// get the umami id from the environment variables</span>
+    <span class="kd">const</span> <span class="nx">umamiId</span> <span class="o">=</span> <span class="nx">env</span><span class="p">[</span><span class="nx">hostname</span><span class="p">];</span>
+
+    <span class="kd">class</span> <span class="nc">ScriptInjector</span> <span class="p">{</span>
+      <span class="nf">element</span><span class="p">(</span><span class="nx">element</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">element</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="s2">`&lt;script async data-website-id="</span><span class="p">${</span><span class="nx">umamiId</span><span class="p">}</span><span class="s2">" src="</span><span class="p">${</span><span class="nx">BASE_UMAMI_URL</span><span class="p">}</span><span class="s2">"&gt;&lt;/script&gt;`</span><span class="p">,</span> <span class="p">{</span>
+          <span class="na">html</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="c1">// html: true rewrites the string as HTML, otherwise it's escaped as text</span>
+        <span class="p">});</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kd">const</span> <span class="nx">response</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">fetch</span><span class="p">(</span><span class="nx">request</span><span class="p">);</span>
+
+    <span class="k">try</span> <span class="p">{</span>
+      <span class="kd">const</span> <span class="nx">contentType</span> <span class="o">=</span> <span class="nx">response</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="dl">"</span><span class="s2">content-type</span><span class="dl">"</span><span class="p">);</span>
+      <span class="kd">const</span> <span class="nx">isHtml</span> <span class="o">=</span> <span class="nx">contentType</span> <span class="o">&amp;&amp;</span> <span class="nx">contentType</span><span class="p">.</span><span class="nf">includes</span><span class="p">(</span><span class="dl">"</span><span class="s2">text/html</span><span class="dl">"</span><span class="p">);</span>
+
+      <span class="c1">// if the response is html and we have an umami id for the hostname, transform the &lt;head&gt; tag</span>
+      <span class="nf">if </span><span class="p">(</span><span class="nx">umamiId</span> <span class="o">&amp;&amp;</span> <span class="nx">isHtml</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nc">HTMLRewriter</span><span class="p">().</span><span class="nf">on</span><span class="p">(</span><span class="dl">"</span><span class="s2">head</span><span class="dl">"</span><span class="p">,</span> <span class="k">new</span> <span class="nc">ScriptInjector</span><span class="p">()).</span><span class="nf">transform</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">response</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">}</span> <span class="nf">catch </span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">response</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>After creating the worker, the <a href="https://developers.cloudflare.com/workers/configuration/environment-variables/" class="external-link" target="_blank">environment variables can be set from the dashboard or using Wrangler</a>. Once the worker is deployed, it can be added to a route. I added it to the <code class="language-plaintext highlighter-rouge">*.&lt;domain&gt;.com/*</code> route, which means that it will run on all subdomains of <code class="language-plaintext highlighter-rouge">&lt;domain&gt;.com</code>. You don’t have to stick to one domain only. You can add multiple domains to the same worker and have it inject the script into all of them.</p>
+
+<blockquote class="meadow-callout  formatted-callout meadow-callout-info" data-type="info" data-title="info">
+<div class="meadow-callout-title">
+<i class="meadow-callout-icon" icon-name="info"></i><span>info</span>
+</div>
+<div class="meadow-callout-content"><p>Instead of using environment variables, you should be able to use <a href="https://developers.cloudflare.com/kv/" class="external-link" target="_blank">KV</a> to store the hostname-Umami ID mapping. I haven’t tried this yet, but I plan to do so soon.</p></div>
+</blockquote>
+
+<h2 id="a-word-of-caution">A Word of Caution</h2>
+<p>This solution ended up working almost perfectly. However, one project had the script vanish mysteriously right after the page loads. This specific project uses VueJS, so I’m guessing Vue is the culprit behind this disappearing act. Investigating this is a task for <a href="/future-me/" title="Future Me" class="wikilink internal-link">Future Me</a>, so I’ll leave it at that for now.</p>
+
+    </div>
+    <div class="side-col">
+      
+      <div class="note-side-wrapper card">
+        <h2>Topics</h2>
+        <div class="topics">
+          
+          <a href="/topics/web-development">Web development</a>
+          
+          <a href="/topics/javascript">JavaScript</a>
+          
+          <a href="/topics/cloudflare">Cloudflare</a>
+          
+        </div>
+      </div>
+      
+
+      <div class="note-side-wrapper card">
+        <h2>Mentions</h2>
+        <ul id="backlinks">
+          <p>Fetching mentions...</p>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="link-preview" role="tooltip">
+  <div id="link-preview-content">
+
+  </div>
+</div>
+
+<script>
+  let pageUrl = '/one-worker-to-track-them-all/';
+  fetch('/scripts/backlinks.json')
+    .then(response => response.json())
+    .then(data => {
+      let backlinks = data[pageUrl];
+      if (backlinks && backlinks.length > 0) {
+        let backlinksDiv = document.getElementById('backlinks');
+        backlinksDiv.innerHTML = backlinks.filter(link => {
+          let currentUrl = new URL(window.location.href);
+          let linkUrl = new URL(`${currentUrl.origin}${link.url[0] == '/' ? '' : '/'}${link.url}`);
+          let linkPathname = linkUrl.pathname.replace(/\/$/, '');
+          let currentPathname = currentUrl.pathname.replace(/\/$/, '');
+          return linkPathname != currentPathname;
+        }).map(link =>
+          `<li><a href="${link.url}">${link.title}</a></li>`).join('');
+      } else {
+        let backlinksDiv = document.getElementById('backlinks');
+        backlinksDiv.innerHTML = 'No mentions from other notes';
+      }
+    });
+</script>
+
+<script>
+  let isHoveringLink = false;
+  let isHoveringPreview = false;
+
+  function prepareLinkPreviews() {
+    let linkPreview = document.getElementById('link-preview');
+    let linkPreviewContent = document.getElementById('link-preview-content');
+    let links = document.querySelectorAll('a.internal-link:not(.wikilink-embed a):not(.embed-link):not(.broken-link):not(.reversefootnote)');
+    links.forEach(link => {
+      link.addEventListener('mouseover', (e) => {
+        isHoveringLink = true;
+        showLinkPreview(link);
+      });
+      link.addEventListener('mouseout', (e) => {
+        isHoveringLink = false;
+        if (!isHoveringPreview) {
+          let linkPreview = document.getElementById('link-preview');
+          setTimeout(() => {
+            if (!isHoveringPreview && !isHoveringLink) {
+              hidePreview();
+            }
+          }, 200);
+        }
+      });
+
+
+      link.addEventListener('focus', () => {
+        showLinkPreview(link);
+      });
+
+      link.addEventListener('blur', () => {
+        hidePreview();
+      });
+    });
+    linkPreview.addEventListener('mouseenter', () => {
+      isHoveringPreview = true;
+    });
+
+    linkPreview.addEventListener('mouseleave', () => {
+      isHoveringPreview = false;
+      if (!isHoveringLink) {
+        hidePreview();
+      }
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        hidePreview();
+      }
+    });
+  }
+
+  function positionPreview(link, linkPreview) {
+    const linkRect = link.getBoundingClientRect();
+    const previewRect = linkPreview.getBoundingClientRect();
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const spaceAbove = linkRect.top - previewRect.height - scrollTop;
+    const spaceBelow = window.innerHeight - linkRect.bottom - previewRect.height + scrollTop;
+    const margin = 30;
+    const pageWidth = document.documentElement.clientWidth;
+
+    if (spaceAbove >= 0 || previewRect.bottom <= scrollTop) {
+      linkPreview.style.top = `${linkRect.top - previewRect.height - margin + scrollTop}px`;
+    } else {
+      linkPreview.style.top = `${linkRect.top + 22 - margin + scrollTop}px`;
+    }
+
+    // Check if preview overflows to the right
+    if (link.offsetLeft + previewRect.width > pageWidth) {
+      linkPreview.style.left = `${Math.max(0, pageWidth - previewRect.width - margin * 2)}px`;
+    } else {
+      linkPreview.style.left = `${Math.max(0, link.offsetLeft - margin * 2)}px`;
+    }
+  }
+
+  function showLinkPreview(link) {
+    let linkPreview = document.getElementById('link-preview');
+    let linkPreviewContent = document.getElementById('link-preview-content');
+    linkPreviewContent.innerHTML = 'Loading...';
+
+    positionPreview(link, linkPreview);
+
+    let linkUrl = link.href;
+    if (linkUrl[0] == '#') return;
+    fetch(linkUrl)
+      .then(response => response.text())
+      .then(data => {
+        let parser = new DOMParser();
+        let doc = parser.parseFromString(data, 'text/html');
+        let title = doc.querySelector('#note-header h1').innerText;
+        let content = '';
+        let preview = '';
+
+        if (linkUrl.includes('#')) {
+          console.log(linkUrl);
+          const fragmentId = linkUrl.split('#')[1];
+          const fragmentEl = doc.getElementById(fragmentId);
+          const headers = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'LI'];
+          if (fragmentEl && headers.indexOf(fragmentEl.tagName)) {
+            const nextHeaders = headers.slice(headers.indexOf(fragmentEl.tagName));
+            const elements = [fragmentEl];
+            let nextEl = fragmentEl.nextElementSibling;
+            while (nextEl && !nextHeaders.includes(nextEl.tagName)) {
+              elements.push(nextEl);
+              nextEl = nextEl.nextElementSibling;
+            }
+            content = elements.map(el => el.outerHTML).join('');
+            preview = `<div>${content}</div>`;
+          } else {
+            content = doc.querySelector('#note-content .main-col').innerHTML;
+            preview = `<h2>${title}</h2><div>${content}</div>`;
+          }
+        } else {
+          content = doc.querySelector('#note-content .main-col').innerHTML;
+          preview = `<h2>${title}</h2><div>${content}</div>`;
+        }
+
+        linkPreviewContent.innerHTML = preview;
+
+        lucide.createIcons();
+        linkPreview.classList.add('visible');
+        linkPreview.setAttribute('aria-hidden', 'false');
+      });
+  }
+
+  function hidePreview() {
+    let linkPreview = document.getElementById('link-preview');
+    linkPreview.classList.remove('visible');
+    linkPreview.setAttribute('aria-hidden', 'false');
+  }
+  prepareLinkPreviews();
+</script>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<script>
+  lucide.createIcons();
+
+  function toggleMeadowCallout(element) {
+    let calloutId = element.getAttribute('aria-controls');
+    let callout = document.getElementById(calloutId);
+    let calloutTitle = callout.querySelector('.meadow-callout-title');
+    let calloutContent = callout.querySelector('.meadow-callout-content');
+    let calloutIcon = callout.querySelector('.meadow-callout-icon-toggle');
+    let isExpanded = !callout.classList.contains('folded');
+    calloutTitle.setAttribute('aria-expanded', !isExpanded);
+    calloutContent.setAttribute('aria-hidden', isExpanded);
+    if (isExpanded) {
+      callout.classList.add('folded');
+    } else {
+      callout.classList.remove('folded');
+    }
+  }
+</script>
+
+  </main>
+</body>
+
+</html>

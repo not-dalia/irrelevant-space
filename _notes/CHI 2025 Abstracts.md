@@ -1,6 +1,7 @@
 ---
 type: note
 title: Navigating CHI Abstract Submissions – The Twitter Scoop
+secret: true
 topics:
   - CHI
   - Academic Writing
@@ -11,7 +12,8 @@ Keeping an eye on the conversations around [CHI 2025](https://chi2025.acm.org/) 
 
 ## Editing title and abstract after submission
 
-The PCS form can't be updated after submission. However, the PDF submission can have minor edits to title and abstract. 
+The PCS form can't be updated after submission. However, the PDF submission can have minor edits to title and abstract.
+**Update:** An new abstract field has been added to the form to allow submitting an update abstract.
 
 ## Desk Rejections
 
